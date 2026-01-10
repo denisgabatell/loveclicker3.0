@@ -1013,6 +1013,17 @@
     </div>
 
     <script>
+        // ========== ФИКС ДЛЯ СОХРАНЕНИЯ СТАРОГО ПРОГРЕССА ==========
+        // Сохраняем старый ключ сохранения, который был в предыдущей версии
+        const OLD_SAVE_KEYS = [
+            'loveClicker_v6',
+            'loveClicker_optimized',
+            'loveClicker_optimized_v2'
+        ];
+        
+        // Новый ключ для этой версии
+        const CURRENT_SAVE_KEY = 'loveClicker_fixed_v3';
+        
         // ========== ОПТИМИЗИРОВАННЫЕ ПЕРЕМЕННЫЕ ==========
         let game = {
             coins: 0,
@@ -1370,22 +1381,41 @@
             totalDiamondsStat.textContent = game.diamonds;
         }
 
-        // ========== ОПТИМИЗИРОВАННОЕ СОХРАНЕНИЕ ==========
-        const SAVE_KEY = 'loveClicker_optimized_v2';
+        // ========== ФИКСИРОВАННОЕ СОХРАНЕНИЕ ==========
         let autoSaveInterval;
         
         function saveGame() {
             try {
                 const saveData = {
-                    game: game,
+                    // Основные данные игры
+                    coins: game.coins,
+                    hearts: game.hearts,
+                    clickPower: game.clickPower,
+                    heartsPerSecond: game.heartsPerSecond,
+                    diamonds: game.diamonds,
+                    totalCoinsEarned: game.totalCoinsEarned,
+                    heartsBought: game.heartsBought,
+                    playTime: game.playTime,
+                    unlockedAnimals: game.unlockedAnimals,
+                    
+                    // Настройки
+                    darkTheme: game.darkTheme,
+                    vibration: game.vibration,
+                    sound: game.sound,
+                    musicEnabled: game.musicEnabled,
+                    
+                    // Дополнительные данные
                     specialHeartCount: specialHeartUpgrade.count,
                     diamondBonusCount: diamondBonusUpgrade.count,
+                    
+                    // Версия и метаданные
                     saveTime: Date.now(),
-                    version: 'optimized_v2'
+                    version: 'fixed_v3'
                 };
                 
-                localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
+                localStorage.setItem(CURRENT_SAVE_KEY, JSON.stringify(saveData));
                 showSaveIcon();
+                console.log('Игра сохранена!');
             } catch (error) {
                 console.error('Ошибка сохранения:', error);
             }
@@ -1393,25 +1423,128 @@
         
         function loadGame() {
             try {
-                const savedData = localStorage.getItem(SAVE_KEY);
-                if (!savedData) return false;
+                console.log('Пытаемся загрузить сохранение...');
                 
-                const save = JSON.parse(savedData);
-                if (save.version !== 'optimized_v2') return false;
-                
-                Object.assign(game, save.game);
-                
-                if (save.specialHeartCount !== undefined) {
-                    specialHeartUpgrade.count = save.specialHeartCount;
+                // Сначала пробуем загрузить из нового ключа
+                let savedData = localStorage.getItem(CURRENT_SAVE_KEY);
+                if (savedData) {
+                    console.log('Найдено сохранение в новом ключе:', CURRENT_SAVE_KEY);
+                    const save = JSON.parse(savedData);
+                    
+                    // Загружаем основные данные
+                    game.coins = save.coins || 0;
+                    game.hearts = save.hearts || 0;
+                    game.clickPower = save.clickPower || 1;
+                    game.heartsPerSecond = save.heartsPerSecond || 0;
+                    game.diamonds = save.diamonds || 0;
+                    game.totalCoinsEarned = save.totalCoinsEarned || 0;
+                    game.heartsBought = save.heartsBought || 0;
+                    game.playTime = save.playTime || 0;
+                    game.unlockedAnimals = save.unlockedAnimals || 0;
+                    
+                    // Настройки
+                    game.darkTheme = save.darkTheme !== undefined ? save.darkTheme : true;
+                    game.vibration = save.vibration !== undefined ? save.vibration : true;
+                    game.sound = save.sound !== undefined ? save.sound : true;
+                    game.musicEnabled = save.musicEnabled !== undefined ? save.musicEnabled : true;
+                    
+                    // Загружаем улучшения если есть
+                    if (save.specialHeartCount !== undefined) {
+                        specialHeartUpgrade.count = save.specialHeartCount;
+                    }
+                    if (save.diamondBonusCount !== undefined) {
+                        diamondBonusUpgrade.count = save.diamondBonusCount;
+                    }
+                    
+                    console.log('Успешно загружено из нового сохранения!');
+                    return true;
                 }
                 
-                if (save.diamondBonusCount !== undefined) {
-                    diamondBonusUpgrade.count = save.diamondBonusCount;
+                // Если нет нового сохранения, пробуем загрузить из старых ключей
+                console.log('Нового сохранения нет, ищем старое...');
+                
+                for (const oldKey of OLD_SAVE_KEYS) {
+                    savedData = localStorage.getItem(oldKey);
+                    if (savedData) {
+                        console.log('Найдено старое сохранение в ключе:', oldKey);
+                        try {
+                            const oldSave = JSON.parse(savedData);
+                            
+                            // Определяем структуру старого сохранения
+                            if (oldSave.game) {
+                                // Новая структура (game объект)
+                                game.coins = oldSave.game.coins || 0;
+                                game.hearts = oldSave.game.hearts || 0;
+                                game.clickPower = oldSave.game.clickPower || 1;
+                                game.heartsPerSecond = oldSave.game.heartsPerSecond || 0;
+                                game.diamonds = oldSave.game.diamonds || 0;
+                                game.totalCoinsEarned = oldSave.game.totalCoinsEarned || 0;
+                                game.heartsBought = oldSave.game.heartsBought || 0;
+                                game.playTime = oldSave.game.playTime || 0;
+                                game.unlockedAnimals = oldSave.game.unlockedAnimals || 0;
+                                
+                                // Настройки
+                                game.darkTheme = oldSave.game.darkTheme !== undefined ? oldSave.game.darkTheme : true;
+                                game.vibration = oldSave.game.vibration !== undefined ? oldSave.game.vibration : true;
+                                game.sound = oldSave.game.sound !== undefined ? oldSave.game.sound : true;
+                                game.musicEnabled = oldSave.game.musicEnabled !== undefined ? oldSave.game.musicEnabled : true;
+                                
+                                // Дополнительные данные
+                                if (oldSave.specialHeartCount !== undefined) {
+                                    specialHeartUpgrade.count = oldSave.specialHeartCount;
+                                }
+                                if (oldSave.diamondBonusCount !== undefined) {
+                                    diamondBonusUpgrade.count = oldSave.diamondBonusCount;
+                                }
+                            } else {
+                                // Старая структура (прямые поля)
+                                game.coins = oldSave.coins || 0;
+                                game.hearts = oldSave.hearts || 0;
+                                game.clickPower = oldSave.clickPower || 1;
+                                game.heartsPerSecond = oldSave.heartsPerSecond || 0;
+                                game.diamonds = oldSave.diamonds || 0;
+                                game.totalCoinsEarned = oldSave.totalCoinsEarned || 0;
+                                game.heartsBought = oldSave.heartsBought || 0;
+                                game.playTime = oldSave.playTime || 0;
+                                game.unlockedAnimals = oldSave.unlockedAnimals || 0;
+                                
+                                // Настройки
+                                game.darkTheme = oldSave.darkTheme !== undefined ? oldSave.darkTheme : true;
+                                game.vibration = oldSave.vibration !== undefined ? oldSave.vibration : true;
+                                game.sound = oldSave.sound !== undefined ? oldSave.sound : true;
+                                game.musicEnabled = oldSave.musicEnabled !== undefined ? oldSave.musicEnabled : true;
+                                
+                                // Дополнительные данные
+                                if (oldSave.diamondBonusCount !== undefined) {
+                                    diamondBonusUpgrade.count = oldSave.diamondBonusCount;
+                                }
+                                if (oldSave.specialHeartCount !== undefined) {
+                                    specialHeartUpgrade.count = oldSave.specialHeartCount;
+                                }
+                            }
+                            
+                            console.log('Успешно мигрировано из старого сохранения!');
+                            
+                            // Сохраняем в новом формате
+                            saveGame();
+                            
+                            // Показываем уведомление о миграции
+                            setTimeout(() => {
+                                showNotification("✅ Прогресс успешно восстановлен из старого сохранения!");
+                            }, 1000);
+                            
+                            return true;
+                        } catch (error) {
+                            console.error('Ошибка при миграции старого сохранения:', error);
+                        }
+                    }
                 }
                 
-                return true;
+                console.log('Сохранений не найдено, начинаем новую игру');
+                return false;
                 
             } catch (error) {
+                console.error('Ошибка загрузки:', error);
                 return false;
             }
         }
@@ -1428,6 +1561,7 @@
 
         // ========== ИНИЦИАЛИЗАЦИЯ ИГРЫ ==========
         function initGamePlay() {
+            console.log('Инициализация игры...');
             loadGame();
             initUpgrades();
             
@@ -1457,6 +1591,7 @@
             window.addEventListener('pagehide', saveGame);
             
             showNotification("💖 Добро пожаловать в игру!");
+            console.log('Игра инициализирована!');
         }
 
         function startAutoSave() {
@@ -1800,6 +1935,19 @@
         window.upgradeClickPower = upgradeClickPower;
         window.buySpecialHeart = buySpecialHeart;
         window.buyDiamondBonus = buyDiamondBonus;
+        
+        // Функция для ручного восстановления сохранения (на всякий случай)
+        window.restoreSave = function() {
+            console.log('Ручное восстановление сохранения...');
+            if (loadGame()) {
+                updateDisplay();
+                renderShopUpgrades();
+                renderGallery();
+                showNotification("✅ Сохранение восстановлено!");
+            } else {
+                showNotification("❌ Сохранение не найдено");
+            }
+        };
     </script>
 </body>
 </html>
