@@ -42,7 +42,7 @@
             position: relative;
         }
         
-        /* ЖИВОЙ ТЕМНЫЙ ФОН */
+        /* ОПТИМИЗИРОВАННЫЙ ФОН - меньше элементов */
         .dark-bg-animation {
             position: fixed;
             top: 0;
@@ -55,84 +55,6 @@
                 radial-gradient(circle at 20% 30%, rgba(255, 107, 139, 0.03) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(199, 125, 255, 0.03) 0%, transparent 50%),
                 radial-gradient(circle at 40% 80%, rgba(72, 202, 228, 0.02) 0%, transparent 50%);
-            animation: bgPulse 20s ease-in-out infinite alternate;
-        }
-        
-        @keyframes bgPulse {
-            0% {
-                opacity: 0.3;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0.5;
-                transform: scale(1.1);
-            }
-        }
-        
-        .dark-hearts-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-        
-        .dark-floating-heart {
-            position: absolute;
-            font-size: 24px;
-            opacity: 0.05;
-            animation: darkFloat 25s linear infinite;
-            filter: drop-shadow(0 0 5px rgba(255, 107, 139, 0.1));
-            color: rgba(255, 107, 139, 0.2);
-        }
-        
-        @keyframes darkFloat {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.05;
-            }
-            90% {
-                opacity: 0.05;
-            }
-            100% {
-                transform: translate(calc(100vw * var(--tx)), calc(100vh * var(--ty))) rotate(360deg) scale(1.2);
-                opacity: 0;
-            }
-        }
-        
-        .dark-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        
-        .dark-particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 107, 139, 0.1);
-            border-radius: 50%;
-            animation: darkSparkle 4s infinite;
-            box-shadow: 0 0 10px rgba(255, 107, 139, 0.2);
-        }
-        
-        @keyframes darkSparkle {
-            0%, 100% { 
-                opacity: 0; 
-                transform: translateY(0) scale(0.5);
-            }
-            50% { 
-                opacity: 0.3; 
-                transform: translateY(-30px) scale(1);
-            }
         }
         
         body.light-theme {
@@ -219,33 +141,15 @@
             display: flex;
             gap: 15px;
             margin-top: 30px;
-            animation: pulseHearts 2s ease-in-out infinite;
         }
         
         .heart-emoji {
             font-size: 1.8rem;
-            animation: floatHeart 3s ease-in-out infinite;
         }
-        
-        .heart-emoji:nth-child(1) { animation-delay: 0s; }
-        .heart-emoji:nth-child(2) { animation-delay: 0.5s; }
-        .heart-emoji:nth-child(3) { animation-delay: 1s; }
-        .heart-emoji:nth-child(4) { animation-delay: 1.5s; }
-        .heart-emoji:nth-child(5) { animation-delay: 2s; }
         
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes floatHeart {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(10deg); }
-        }
-        
-        @keyframes pulseHearts {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
         }
         
         @keyframes gradientFlow {
@@ -387,54 +291,49 @@
         
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
             margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 5px;
         }
         
         .gallery-item {
             aspect-ratio: 1;
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             border: 2px solid transparent;
-            transition: all 0.3s;
             position: relative;
             overflow: hidden;
-            padding: 10px;
+            padding: 5px;
         }
         
         .gallery-item.unlocked {
             background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(199, 125, 255, 0.1));
             border-color: var(--gold);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.1);
-            animation: jump 2s ease-in-out infinite;
         }
         
         .gallery-item.locked {
-            opacity: 0.3;
+            opacity: 0.5;
             filter: grayscale(0.8);
             background: rgba(255, 255, 255, 0.03);
         }
         
-        @keyframes jump {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
         .animal-emoji {
-            font-size: 40px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 5px;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         
         .animal-status {
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 10px;
+            font-size: 0.6rem;
+            padding: 2px 5px;
+            border-radius: 8px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -448,7 +347,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: gradientFlow 3s ease infinite;
         }
         
         .animal-status.locked {
@@ -554,54 +452,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        /* ПОЛНОЭКРАННЫЙ ПОЦЕЛУЙ */
-        .fullscreen-kiss {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            pointer-events: none;
-            opacity: 0;
-        }
-        
-        .fullscreen-kiss.show {
-            opacity: 1;
-        }
-        
-        .fullscreen-kiss-content {
-            font-size: 200px;
-            animation: kissExplode 1.5s ease-out forwards;
-            filter: drop-shadow(0 0 50px rgba(255, 20, 147, 0.8));
-        }
-        
-        @keyframes kissExplode {
-            0% {
-                transform: scale(0.2) rotate(-30deg);
-                opacity: 0;
-            }
-            20% {
-                transform: scale(1.2) rotate(10deg);
-                opacity: 1;
-            }
-            40% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-            80% {
-                transform: scale(1) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5) rotate(10deg);
-                opacity: 0;
-            }
         }
         
         /* ОСНОВНОЙ КОНТЕНТ */
@@ -716,33 +566,6 @@
             margin: 30px 0;
         }
         
-        .pulse-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 220px;
-            height: 220px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-            opacity: 0.3;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: translate(-50%, -50%) scale(0.8);
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 0.1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 0;
-            }
-        }
-        
         .heart-btn {
             width: 180px;
             height: 180px;
@@ -788,12 +611,6 @@
             border: 1px solid var(--card-border);
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.05);
         }
         
         .stat-card::before {
@@ -827,23 +644,12 @@
             margin-top: 5px;
         }
         
-        .shop-section {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 25px 20px;
-            margin-top: 25px;
-            border: 1px solid var(--card-border);
-            max-height: 400px;
-            overflow-y: auto;
-        }
-        
         .upgrade-item {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
             padding: 18px;
             margin-bottom: 15px;
             border: 1px solid var(--card-border);
-            transition: all 0.3s;
             position: relative;
             overflow: hidden;
         }
@@ -941,7 +747,6 @@
         
         .buy-btn.enabled {
             background: linear-gradient(45deg, var(--primary), var(--purple));
-            animation: pulseBtn 1.5s infinite;
         }
         
         .buy-btn.disabled {
@@ -950,11 +755,6 @@
             transform: none;
             box-shadow: none;
             opacity: 0.6;
-        }
-        
-        @keyframes pulseBtn {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 139, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(255, 107, 139, 0); }
         }
         
         .notification {
@@ -979,33 +779,6 @@
         .notification.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
-        }
-        
-        .bonus-5-coins {
-            position: fixed;
-            font-size: 25px;
-            z-index: 999;
-            pointer-events: none;
-            animation: bonusFloat 4s ease-out forwards;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
-        }
-        
-        @keyframes bonusFloat {
-            0% {
-                transform: translateY(100vh) scale(0.5);
-                opacity: 0;
-            }
-            20% {
-                opacity: 1;
-                transform: translateY(80vh) scale(1);
-            }
-            80% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-50px) scale(0.5);
-                opacity: 0;
-            }
         }
         
         .save-icon {
@@ -1036,11 +809,6 @@
                 font-size: 60px;
             }
             
-            .pulse-ring {
-                width: 180px;
-                height: 180px;
-            }
-            
             .stats-grid {
                 grid-template-columns: 1fr;
             }
@@ -1059,26 +827,20 @@
                 font-size: 1.1rem;
             }
             
-            .fullscreen-kiss-content {
-                font-size: 150px;
-            }
-            
             .gallery-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
+                gap: 8px;
             }
             
             .animal-emoji {
-                font-size: 30px;
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ТЕМНЫЙ ЖИВОЙ ФОН -->
+    <!-- УПРОЩЕННЫЙ ФОН -->
     <div class="dark-bg-animation"></div>
-    <div class="dark-hearts-bg" id="darkHeartsBg"></div>
-    <div class="dark-particles" id="darkParticles"></div>
     
     <!-- ЭКРАН ЗАГРУЗКИ -->
     <div class="loading-screen" id="loadingScreen">
@@ -1098,16 +860,6 @@
                 <div class="heart-emoji">💓</div>
             </div>
         </div>
-    </div>
-    
-    <!-- ПОЛНОЭКРАННЫЙ ПОЦЕЛУЙ -->
-    <div class="fullscreen-kiss" id="fullscreenKiss">
-        <div class="fullscreen-kiss-content">💋</div>
-    </div>
-    
-    <!-- УВЕДОМЛЕНИЕ ЛЮБВИ -->
-    <div class="love-notification" id="loveNotification">
-        не забывай что я тебя люблю 💖
     </div>
     
     <!-- АУДИО ПЛЕЕР -->
@@ -1167,7 +919,7 @@
         <div class="menu-section gallery-section">
             <div class="menu-title">🏆 Галерея зверьков</div>
             <div style="color: var(--accent); font-size: 0.9rem; margin-bottom: 10px;">
-                Собери всех 50 зверьков! Открывайте новых за каждые 500 монет
+                Собери всех 100 зверьков! Открывайте новых за каждые 500 монет
             </div>
             <div class="gallery-grid" id="galleryGrid">
                 <!-- Зверьки будут здесь -->
@@ -1194,7 +946,7 @@
             </div>
             <div class="menu-item">
                 <span>🐾 Открыто зверьков:</span>
-                <span id="animalsUnlockedCount">0/50</span>
+                <span id="animalsUnlockedCount">0/100</span>
             </div>
         </div>
     </div>
@@ -1230,10 +982,6 @@
         
         <!-- Основное сердечко -->
         <div class="heart-section">
-            <div class="pulse-ring"></div>
-            <div class="pulse-ring" style="animation-delay: 0.5s;"></div>
-            <div class="pulse-ring" style="animation-delay: 1s;"></div>
-            
             <button class="heart-btn" id="heartBtn">
                 💖
             </button>
@@ -1265,43 +1013,33 @@
     </div>
 
     <script>
-        // ========== ТЕМНЫЙ ЖИВОЙ ФОН ==========
-        function createDarkFloatingHearts() {
-            const container = document.getElementById('darkHeartsBg');
-            const hearts = ['💖', '💕', '💝', '💘', '💓', '💗', '💞'];
+        // ========== ОПТИМИЗИРОВАННЫЕ ПЕРЕМЕННЫЕ ==========
+        let game = {
+            coins: 0,
+            hearts: 0,
+            clickPower: 1,
+            heartsPerSecond: 0,
+            diamonds: 0,
+            totalCoinsEarned: 0,
+            lastBonusCoins: 0,
+            lastDiamondBonus: 0,
+            heartsBought: 0,
+            playTime: 0,
+            unlockedAnimals: 0,
+            lastUpdate: Date.now(),
+            last500CoinsNotification: 0,
             
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'dark-floating-heart';
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.top = Math.random() * 100 + 'vh';
-                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                heart.style.opacity = Math.random() * 0.05 + 0.02;
-                heart.style.color = `rgba(255, ${Math.random() * 100 + 100}, ${Math.random() * 100 + 150}, 0.1)`;
-                heart.style.setProperty('--tx', Math.random());
-                heart.style.setProperty('--ty', Math.random());
-                heart.style.animationDuration = (Math.random() * 15 + 20) + 's';
-                heart.style.animationDelay = Math.random() * 10 + 's';
-                container.appendChild(heart);
-            }
-        }
-        
-        function createDarkParticles() {
-            const container = document.getElementById('darkParticles');
+            // Настройки
+            darkTheme: true,
+            vibration: true,
+            sound: true,
+            musicEnabled: true,
             
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'dark-particle';
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = Math.random() * 100 + 'vh';
-                particle.style.width = particle.style.height = (Math.random() * 2 + 1) + 'px';
-                particle.style.animationDelay = Math.random() * 4 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                particle.style.backgroundColor = `rgba(255, ${Math.random() * 100 + 100}, ${Math.random() * 100 + 150}, 0.1)`;
-                container.appendChild(particle);
-            }
-        }
+            // Магазин улучшений
+            upgrades: [],
+            specialHeartCount: 0,
+            diamondBonusCount: 0
+        };
         
         // ========== ЭКРАН ЗАГРУЗКИ И НАЧАЛО ИГРЫ ==========
         const loadingScreen = document.getElementById('loadingScreen');
@@ -1309,7 +1047,7 @@
         const gameContainer = document.getElementById('gameContainer');
         const menuButton = document.getElementById('menuButton');
         const shopButton = document.getElementById('shopButton');
-        const fullscreenKiss = document.getElementById('fullscreenKiss');
+        const backgroundMusic = document.getElementById('backgroundMusic');
 
         function startGame() {
             loadingScreen.style.opacity = '0';
@@ -1321,14 +1059,10 @@
                 menuButton.classList.add('show');
                 shopButton.classList.add('show');
                 
-                // Создаем темный живой фон
-                createDarkFloatingHearts();
-                createDarkParticles();
-                
                 initGamePlay();
                 
                 setTimeout(() => {
-                    if (musicEnabled) {
+                    if (game.musicEnabled) {
                         playMusic();
                     }
                 }, 1000);
@@ -1337,34 +1071,25 @@
 
         startButton.addEventListener('click', startGame);
         
-        setTimeout(() => {
-            if (loadingScreen.style.display !== 'none') {
-                startButton.textContent = 'ИГРА ЗАГРУЖЕНА!';
-                startButton.style.background = 'linear-gradient(45deg, var(--green), var(--blue))';
-            }
-        }, 5000);
-
-        // ========== МУЗЫКА ==========
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        let musicEnabled = true;
+        // ========== ОПТИМИЗИРОВАННАЯ МУЗЫКА ==========
         let isMusicPlaying = false;
 
         function playMusic() {
-            if (musicEnabled && !isMusicPlaying) {
+            if (game.musicEnabled && !isMusicPlaying) {
                 backgroundMusic.volume = 0.2;
                 backgroundMusic.play().then(() => {
                     isMusicPlaying = true;
                 }).catch(error => {
-                    console.log('Автовоспроизведение заблокировано:', error);
+                    console.log('Автовоспроизведение заблокировано');
                 });
             }
         }
 
         function toggleMusic() {
-            musicEnabled = !musicEnabled;
-            document.getElementById('musicToggle').checked = musicEnabled;
+            game.musicEnabled = !game.musicEnabled;
+            document.getElementById('musicToggle').checked = game.musicEnabled;
             
-            if (musicEnabled) {
+            if (game.musicEnabled) {
                 playMusic();
             } else {
                 backgroundMusic.pause();
@@ -1374,15 +1099,6 @@
         }
 
         document.getElementById('musicToggle').addEventListener('change', toggleMusic);
-
-        // ========== ПОЛНОЭКРАННЫЙ ПОЦЕЛУЙ ==========
-        function showFullscreenKiss() {
-            fullscreenKiss.classList.add('show');
-            
-            setTimeout(() => {
-                fullscreenKiss.classList.remove('show');
-            }, 1500);
-        }
 
         // ========== МАГАЗИН ОКНО ==========
         const shopOverlay = document.getElementById('shopOverlay');
@@ -1394,7 +1110,6 @@
             setTimeout(() => {
                 shopWindow.style.bottom = '0';
             }, 10);
-            
             renderShopUpgrades();
         }
         
@@ -1409,29 +1124,7 @@
         shopOverlay.addEventListener('click', closeShopWindow);
         closeShop.addEventListener('click', closeShopWindow);
 
-        // ========== ИГРОВЫЕ ПЕРЕМЕННЫЕ ==========
-        let coins = 0;
-        let hearts = 0;
-        let clickPower = 1;
-        let heartsPerSecond = 0;
-        let diamonds = 0;
-        let totalCoinsEarned = 0;
-        let lastBonusCoins = 0;
-        let lastDiamondBonus = 0;
-        let heartsBought = 0;
-        let playTime = 0;
-        let unlockedAnimals = 0;
-        let lastUpdate = Date.now();
-        
-        // Для уведомлений
-        let last500CoinsNotification = 0;
-        let lastLoveNotificationTime = 0;
-        
-        let darkTheme = true;
-        let vibration = true;
-        let sound = true;
-        
-        // Элементы DOM
+        // ========== ЭЛЕМЕНТЫ DOM ==========
         const heartBtn = document.getElementById('heartBtn');
         const coinsEl = document.getElementById('coins');
         const heartsEl = document.getElementById('hearts');
@@ -1454,283 +1147,291 @@
         const heartsBoughtStat = document.getElementById('heartsBoughtStat');
         const playTimeStat = document.getElementById('playTimeStat');
 
-        // ========== ГАЛЕРЕЯ ЗВЕРЬКОВ ==========
+        // ========== 100 ЗВЕРЬКОВ (50 + 50 новых) ==========
         const animals = [
+            // Первые 50 зверьков
             "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯",
             "🦁", "🐮", "🐷", "🐸", "🐵", "🐔", "🐧", "🐦", "🐤", "🦆",
             "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄", "🐝", "🐛", "🦋",
             "🐌", "🐞", "🐜", "🦟", "🦗", "🕷", "🦂", "🐢", "🐍", "🦎",
-            "🐙", "🦑", "🦐", "🦞", "🐡", "🐠", "🐟", "🐬", "🐳", "🦈"
+            "🐙", "🦑", "🦐", "🦞", "🐡", "🐠", "🐟", "🐬", "🐳", "🦈",
+            
+            // 50 новых зверьков
+            "🦒", "🦘", "🦡", "🦃", "🦚", "🦜", "🦢", "🦩", "🦥", "🦦",
+            "🦨", "🦫", "🦮", "🐕‍🦺", "🐩", "🐈‍⬛", "🪰", "🪱", "🪲", "🪳",
+            "🪰", "🦉", "🦤", "🦭", "🐿️", "🦔", "🦓", "🦏", "🦛", "🦌",
+            "🐪", "🐫", "🦙", "🦒", "🦘", "🦥", "🦦", "🦨", "🦡", "🐾",
+            "🦋", "🐛", "🐌", "🦗", "🐜", "🦟", "🦂", "🕸️", "🦠", "🧬"
         ];
 
-        function renderGallery() {
-            galleryGrid.innerHTML = '';
-            
-            for (let i = 0; i < 50; i++) {
-                const isUnlocked = i < unlockedAnimals;
-                const galleryItem = document.createElement('div');
-                galleryItem.className = `gallery-item ${isUnlocked ? 'unlocked' : 'locked'}`;
-                galleryItem.innerHTML = `
-                    <div class="animal-emoji">${animals[i]}</div>
-                    <div class="animal-status ${isUnlocked ? 'unlocked' : 'locked'}">
-                        ${isUnlocked ? 'открыто' : '???'}
-                    </div>
-                `;
-                galleryItem.title = isUnlocked ? `Зверёк ${i + 1}` : 'Ещё не открыт';
-                galleryGrid.appendChild(galleryItem);
-            }
-            animalsUnlockedCount.textContent = `${unlockedAnimals}/50`;
+        // ========== ОПТИМИЗИРОВАННЫЙ МАГАЗИН УЛУЧШЕНИЙ ==========
+        function initUpgrades() {
+            game.upgrades = [
+                { 
+                    id: 1, 
+                    name: "💖 Милое сердечко", 
+                    description: "Маленькая порция любви", 
+                    baseCost: 20, 
+                    cost: 20, 
+                    heartsPerSecond: 1, 
+                    count: 0,
+                    requiredCount: 0,
+                    unlocked: true
+                },
+                { 
+                    id: 2, 
+                    name: "💕 Парящее сердечко", 
+                    description: "Летает вокруг экрана", 
+                    baseCost: 75, 
+                    cost: 75, 
+                    heartsPerSecond: 3, 
+                    count: 0,
+                    requiredCount: 0,
+                    unlocked: false
+                },
+                { 
+                    id: 3, 
+                    name: "💘 Сердце Купидона", 
+                    description: "Стрела попадает прямо в цель", 
+                    baseCost: 250, 
+                    cost: 250, 
+                    heartsPerSecond: 10, 
+                    count: 0,
+                    requiredCount: 10,
+                    unlocked: false
+                },
+                { 
+                    id: 4, 
+                    name: "💝 Подарочное сердце", 
+                    description: "С красивым бантиком", 
+                    baseCost: 750, 
+                    cost: 750, 
+                    heartsPerSecond: 25, 
+                    count: 0,
+                    requiredCount: 20,
+                    unlocked: false
+                },
+                { 
+                    id: 5, 
+                    name: "🐵 Обезьянка любви", 
+                    description: "Забавный помощник влюбленных", 
+                    baseCost: 2000, 
+                    cost: 2000, 
+                    heartsPerSecond: 70, 
+                    count: 0,
+                    requiredCount: 30,
+                    unlocked: false
+                },
+                { 
+                    id: 6, 
+                    name: "👑 Золотое сердце", 
+                    description: "Королевский уровень любви", 
+                    baseCost: 5000, 
+                    cost: 5000, 
+                    heartsPerSecond: 200, 
+                    count: 0,
+                    requiredCount: 40,
+                    unlocked: false
+                }
+            ];
         }
 
-        // ========== МАГАЗИН С ПРОГРЕССИВНОЙ ПРОКАЧКОЙ ==========
-        const upgrades = [
-            { 
-                id: 1, 
-                name: "💖 Милое сердечко", 
-                description: "Маленькая порция любви", 
-                baseCost: 20, 
-                cost: 20, 
-                heartsPerSecond: 1, 
-                count: 0,
-                requiredCount: 0,
-                maxCount: 10,
-                unlocked: true
-            },
-            { 
-                id: 2, 
-                name: "💕 Парящее сердечко", 
-                description: "Летает вокруг экрана", 
-                baseCost: 75, 
-                cost: 75, 
-                heartsPerSecond: 3, 
-                count: 0,
-                requiredCount: 10,
-                maxCount: 10,
-                unlocked: false
-            },
-            { 
-                id: 3, 
-                name: "💘 Сердце Купидона", 
-                description: "Стрела попадает прямо в цель", 
-                baseCost: 250, 
-                cost: 250, 
-                heartsPerSecond: 10, 
-                count: 0,
-                requiredCount: 20,
-                maxCount: 10,
-                unlocked: false
-            },
-            { 
-                id: 4, 
-                name: "💝 Подарочное сердце", 
-                description: "С красивым бантиком", 
-                baseCost: 750, 
-                cost: 750, 
-                heartsPerSecond: 25, 
-                count: 0,
-                requiredCount: 30,
-                maxCount: 10,
-                unlocked: false
-            },
-            { 
-                id: 5, 
-                name: "🐵 Обезьянка любви", 
-                description: "Забавный помощник влюбленных", 
-                baseCost: 2000, 
-                cost: 2000, 
-                heartsPerSecond: 70, 
-                count: 0,
-                requiredCount: 40,
-                maxCount: 10,
-                unlocked: false
-            },
-            { 
-                id: 6, 
-                name: "👑 Золотое сердце", 
-                description: "Королевский уровень любви", 
-                baseCost: 5000, 
-                cost: 5000, 
-                heartsPerSecond: 200, 
-                count: 0,
-                requiredCount: 50,
-                maxCount: 10,
-                unlocked: false
-            }
-        ];
-        
-        // ИЗМЕНЕНО: Сердечко для Дианы теперь за 5 алмазов и дает 250 монет
+        // Сердечко для Дианы
         const specialHeartUpgrade = {
             id: 100, 
             name: "💝 Сердечко для Дианы", 
             description: "Особенный подарок - дарит 250 монет", 
-            diamondCost: 5, 
-            count: 0,
-            unlocked: true
+            diamondCost: 5,
+            count: 0
         };
         
+        // Бонус 500 монет
         const diamondBonusUpgrade = {
             id: 101, 
             name: "💰 Бонус 500 монет", 
-            description: "Дарит 500 монет и полнoэкранный поцелуй!", 
-            diamondCost: 10, 
-            count: 0,
-            unlocked: true
+            description: "Дарит 500 монет!", 
+            diamondCost: 10,
+            count: 0
         };
-        
-        // Функция проверки разблокировки улучшений
-        function checkUpgradesUnlock() {
-            let totalCount = 0;
-            upgrades.forEach(upgrade => {
-                totalCount += upgrade.count;
-            });
-            
-            upgrades.forEach(upgrade => {
-                if (totalCount >= upgrade.requiredCount) {
-                    upgrade.unlocked = true;
-                }
-            });
-        }
 
-        function renderShopUpgrades() {
-            upgradesList.innerHTML = '';
+        // ОПТИМИЗИРОВАННАЯ ГАЛЕРЕЯ
+        function renderGallery() {
+            const fragment = document.createDocumentFragment();
             
-            checkUpgradesUnlock();
-            
-            // Обычные улучшения с прогрессивной прокачкой
-            upgrades.forEach(upgrade => {
-                const canAfford = coins >= upgrade.cost && upgrade.unlocked;
-                const upgradeEl = createShopUpgradeElement(upgrade, canAfford);
-                upgradesList.appendChild(upgradeEl);
-            });
-            
-            // Улучшение силы клика
-            const clickUpgradeCost = clickPower * 100;
-            const canAffordClick = coins >= clickUpgradeCost;
-            const clickUpgradeEl = document.createElement('div');
-            clickUpgradeEl.className = 'upgrade-item';
-            clickUpgradeEl.innerHTML = `
-                <div class="upgrade-header">
-                    <div class="upgrade-name">💪 Усиление клика</div>
-                    <div class="upgrade-cost">${clickUpgradeCost} 🪙</div>
-                </div>
-                <div style="color: var(--accent); font-size: 0.9rem; margin: 5px 0;">
-                    Увеличивает силу каждого клика
-                </div>
-                <div class="upgrade-info">
-                    <div>Текущая сила: ${clickPower}</div>
-                    <div>Следующая: ${clickPower + 1}</div>
-                </div>
-                <button class="buy-btn ${canAffordClick ? 'enabled' : 'disabled'}" 
-                        onclick="upgradeClickPower()" 
-                        ${canAffordClick ? '' : 'disabled'}>
-                    ${canAffordClick ? 'Ну все, теперь можно 💪' : 'Не не не, еще собери'}
-                </button>
-            `;
-            upgradesList.appendChild(clickUpgradeEl);
-            
-            // Особое сердечко для Дианы (теперь за 5 алмазов)
-            const canAffordHeart = diamonds >= specialHeartUpgrade.diamondCost;
-            const specialHeartEl = document.createElement('div');
-            specialHeartEl.className = 'upgrade-item';
-            specialHeartEl.style.borderColor = '#ff6b8b';
-            specialHeartEl.style.boxShadow = '0 5px 15px rgba(255, 107, 139, 0.1)';
-            specialHeartEl.innerHTML = `
-                <div class="upgrade-header">
-                    <div class="upgrade-name">${specialHeartUpgrade.name}</div>
-                    <div class="diamond-cost">${specialHeartUpgrade.diamondCost} 💎</div>
-                </div>
-                <div style="color: var(--accent); font-size: 0.9rem; margin: 5px 0;">
-                    ${specialHeartUpgrade.description}
-                </div>
-                <div class="upgrade-info">
-                    <div>Куплено: ${specialHeartUpgrade.count}</div>
-                    <div>+250 монет 💰</div>
-                </div>
-                <button class="buy-btn ${canAffordHeart ? 'enabled' : 'disabled'}" 
-                        onclick="buySpecialHeart()" 
-                        ${canAffordHeart ? '' : 'disabled'}
-                        style="background: linear-gradient(45deg, #ff6b8b, #c77dff);">
-                    ${canAffordHeart ? 'Ну все, теперь можно 💝' : 'Не не не, еще собери'}
-                </button>
-            `;
-            upgradesList.appendChild(specialHeartEl);
-            
-            // Бонус 500 монет за алмазы
-            const canAffordBonus = diamonds >= diamondBonusUpgrade.diamondCost;
-            const diamondBonusEl = document.createElement('div');
-            diamondBonusEl.className = 'upgrade-item';
-            diamondBonusEl.style.borderColor = '#ffd700';
-            diamondBonusEl.style.boxShadow = '0 5px 15px rgba(255, 215, 0, 0.1)';
-            diamondBonusEl.innerHTML = `
-                <div class="upgrade-header">
-                    <div class="upgrade-name">${diamondBonusUpgrade.name}</div>
-                    <div class="diamond-cost">${diamondBonusUpgrade.diamondCost} 💎</div>
-                </div>
-                <div style="color: var(--accent); font-size: 0.9rem; margin: 5px 0;">
-                    ${diamondBonusUpgrade.description}
-                </div>
-                <div class="upgrade-info">
-                    <div>Куплено: ${diamondBonusUpgrade.count}</div>
-                    <div>Огромный бонус!</div>
-                </div>
-                <button class="buy-btn ${canAffordBonus ? 'enabled' : 'disabled'}" 
-                        onclick="buyDiamondBonus()" 
-                        ${canAffordBonus ? '' : 'disabled'}
-                        style="background: linear-gradient(45deg, #ffd700, #ff6b8b);">
-                    ${canAffordBonus ? 'Ну все, теперь можно 💎' : 'Не не не, еще собери'}
-                </button>
-            `;
-            upgradesList.appendChild(diamondBonusEl);
-        }
-
-        function createShopUpgradeElement(upgrade, canAfford) {
-            const div = document.createElement('div');
-            const isLocked = !upgrade.unlocked;
-            div.className = `upgrade-item ${isLocked ? 'locked' : ''}`;
-            
-            const requirementText = isLocked ? 
-                `🔒 Откроется после ${upgrade.requiredCount} сердечек` : 
-                '';
-            
-            const buttonText = canAfford ? 
-                'Ну все, теперь можно 💝' : 
-                'Не не не, еще собери';
+            for (let i = 0; i < 100; i++) {
+                const isUnlocked = i < game.unlockedAnimals;
+                const galleryItem = document.createElement('div');
+                galleryItem.className = `gallery-item ${isUnlocked ? 'unlocked' : 'locked'}`;
                 
-            div.innerHTML = `
-                <div class="upgrade-header">
-                    <div class="upgrade-name">
-                        ${isLocked ? '🔒' : ''} ${upgrade.name}
-                        ${upgrade.count >= upgrade.maxCount ? ' ✅' : ''}
-                    </div>
-                    <div class="upgrade-cost">${upgrade.cost} 🪙</div>
-                </div>
-                <div style="color: var(--accent); font-size: 0.9rem; margin: 5px 0;">
-                    ${upgrade.description}
-                </div>
-                ${requirementText ? `<div class="upgrade-requirement">${requirementText}</div>` : ''}
-                <div class="upgrade-info">
-                    <div class="upgrade-effect">
-                        <span>+${upgrade.heartsPerSecond} 💖/сек</span>
-                    </div>
-                    <div class="upgrade-count">
-                        ${upgrade.count}/${upgrade.maxCount}
-                    </div>
-                </div>
-                <button class="buy-btn ${canAfford && !isLocked ? 'enabled' : 'disabled'}" 
-                        onclick="buyUpgrade(${upgrade.id})" 
-                        ${canAfford && !isLocked ? '' : 'disabled'}
-                        ${upgrade.count >= upgrade.maxCount ? 'disabled' : ''}>
-                    ${upgrade.count >= upgrade.maxCount ? 'Максимальный уровень!' : buttonText}
-                </button>
-            `;
-            return div;
+                if (isUnlocked) {
+                    galleryItem.innerHTML = `
+                        <div class="animal-emoji">${animals[i]}</div>
+                        <div class="animal-status unlocked">
+                            открыто
+                        </div>
+                    `;
+                    galleryItem.title = `Зверёк ${i + 1}`;
+                } else {
+                    galleryItem.innerHTML = `
+                        <div class="animal-emoji">❓</div>
+                        <div class="animal-status locked">
+                            ???
+                        </div>
+                    `;
+                    galleryItem.title = 'Ещё не открыт';
+                }
+                
+                fragment.appendChild(galleryItem);
+            }
+            
+            galleryGrid.innerHTML = '';
+            galleryGrid.appendChild(fragment);
+            animalsUnlockedCount.textContent = `${game.unlockedAnimals}/100`;
+        }
+
+        // ========== ОПТИМИЗИРОВАННЫЙ ИГРОВОЙ ЦИКЛ ==========
+        let gameLoopRunning = false;
+        let lastGameLoop = 0;
+        
+        function optimizedGameLoop(timestamp) {
+            if (!gameLoopRunning) return;
+            
+            if (!lastGameLoop) lastGameLoop = timestamp;
+            const delta = Math.min(timestamp - lastGameLoop, 1000);
+            
+            if (game.heartsPerSecond > 0) {
+                game.hearts += (game.heartsPerSecond * delta) / 1000;
+                
+                if (game.hearts >= 10) {
+                    const earnedCoins = Math.floor(game.hearts / 10);
+                    if (earnedCoins > 0) {
+                        addCoins(earnedCoins);
+                        game.hearts = game.hearts % 10;
+                        checkProgression();
+                    }
+                }
+            }
+            
+            if (timestamp - game.lastUpdate > 100) {
+                updateDisplay();
+                game.lastUpdate = timestamp;
+            }
+            
+            lastGameLoop = timestamp;
+            requestAnimationFrame(optimizedGameLoop);
+        }
+
+        function addCoins(amount) {
+            game.coins += amount;
+            game.totalCoinsEarned += amount;
+        }
+
+        function checkProgression() {
+            // Проверяем алмазы каждые 100 монет
+            if (game.totalCoinsEarned >= 100 && game.totalCoinsEarned >= game.lastDiamondBonus + 100) {
+                const diamondsEarned = Math.floor((game.totalCoinsEarned - game.lastDiamondBonus) / 100);
+                if (diamondsEarned > 0) {
+                    game.diamonds += diamondsEarned;
+                    game.lastDiamondBonus = game.totalCoinsEarned - (game.totalCoinsEarned % 100);
+                    showNotification(`💎 Получено ${diamondsEarned} алмаз${diamondsEarned > 1 ? 'а' : ''} за монеты!`);
+                    updateDiamondsDisplay();
+                }
+            }
+            
+            // Проверяем зверьков каждые 500 монет
+            const earnedAnimals = Math.floor(game.totalCoinsEarned / 500);
+            if (earnedAnimals > game.unlockedAnimals && earnedAnimals <= 100) {
+                const newAnimals = earnedAnimals - game.unlockedAnimals;
+                game.unlockedAnimals = earnedAnimals;
+                
+                if (newAnimals > 0) {
+                    showNotification(`🎉 Открыт${newAnimals > 1 ? 'о' : ''} ${newAnimals} новый${newAnimals > 1 ? 'ых' : ''} звер${newAnimals > 1 ? 'ьков' : 'ёк'}!`);
+                    renderGallery();
+                }
+            }
+            
+            // Проверяем уведомление каждые 500 монет
+            if (game.totalCoinsEarned >= 500 && game.totalCoinsEarned >= game.last500CoinsNotification + 500) {
+                game.last500CoinsNotification = game.totalCoinsEarned - (game.totalCoinsEarned % 500);
+                showNotification("💝 Моя ты умничка! Уже " + game.last500CoinsNotification + " монет! 💖");
+            }
+        }
+
+        function updateDisplay() {
+            coinsEl.textContent = Math.floor(game.coins);
+            heartsEl.textContent = game.hearts.toFixed(1);
+            heartsPerSecondEl.textContent = game.heartsPerSecond.toFixed(1);
+            clickPowerEl.textContent = game.clickPower;
+            diamondsCounter.textContent = game.diamonds;
+        }
+
+        function updateDiamondsDisplay() {
+            diamondsCounter.textContent = game.diamonds;
+            totalDiamondsStat.textContent = game.diamonds;
+        }
+
+        // ========== ОПТИМИЗИРОВАННОЕ СОХРАНЕНИЕ ==========
+        const SAVE_KEY = 'loveClicker_optimized_v2';
+        let autoSaveInterval;
+        
+        function saveGame() {
+            try {
+                const saveData = {
+                    game: game,
+                    specialHeartCount: specialHeartUpgrade.count,
+                    diamondBonusCount: diamondBonusUpgrade.count,
+                    saveTime: Date.now(),
+                    version: 'optimized_v2'
+                };
+                
+                localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
+                showSaveIcon();
+            } catch (error) {
+                console.error('Ошибка сохранения:', error);
+            }
+        }
+        
+        function loadGame() {
+            try {
+                const savedData = localStorage.getItem(SAVE_KEY);
+                if (!savedData) return false;
+                
+                const save = JSON.parse(savedData);
+                if (save.version !== 'optimized_v2') return false;
+                
+                Object.assign(game, save.game);
+                
+                if (save.specialHeartCount !== undefined) {
+                    specialHeartUpgrade.count = save.specialHeartCount;
+                }
+                
+                if (save.diamondBonusCount !== undefined) {
+                    diamondBonusUpgrade.count = save.diamondBonusCount;
+                }
+                
+                return true;
+                
+            } catch (error) {
+                return false;
+            }
+        }
+        
+        function showSaveIcon() {
+            const saveIcon = document.getElementById('saveIcon');
+            saveIcon.style.opacity = '1';
+            saveIcon.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                saveIcon.style.opacity = '0';
+                saveIcon.style.transform = 'translateY(10px)';
+            }, 2000);
         }
 
         // ========== ИНИЦИАЛИЗАЦИЯ ИГРЫ ==========
         function initGamePlay() {
             loadGame();
+            initUpgrades();
             
-            if (!darkTheme) {
+            if (!game.darkTheme) {
                 document.body.classList.add('light-theme');
             }
             
@@ -1741,12 +1442,13 @@
             updateDisplay();
             renderShopUpgrades();
             renderGallery();
-            gameLoop();
             
-            // Таймер игрового времени
+            gameLoopRunning = true;
+            requestAnimationFrame(optimizedGameLoop);
+            
             setInterval(() => {
-                playTime++;
-                if (playTime % 60 === 0) {
+                game.playTime++;
+                if (game.playTime % 60 === 0) {
                     updateMenuStats();
                 }
             }, 1000);
@@ -1756,39 +1458,30 @@
             
             showNotification("💖 Добро пожаловать в игру!");
         }
-        
-        // ========== НОВАЯ СИСТЕМА УВЕДОМЛЕНИЙ ==========
+
+        function startAutoSave() {
+            if (autoSaveInterval) clearInterval(autoSaveInterval);
+            autoSaveInterval = setInterval(saveGame, 30000);
+        }
+
         function startLoveNotifications() {
-            // Первое уведомление через 2 минуты
-            setTimeout(showLoveNotification, 120000);
-            // Затем каждые 2 минуты
-            setInterval(showLoveNotification, 120000);
+            setInterval(() => {
+                const notification = document.createElement('div');
+                notification.className = 'love-notification';
+                notification.textContent = 'не забывай что я тебя люблю 💖';
+                notification.style.animation = 'loveNotification 10s ease-in-out forwards';
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 10000);
+            }, 120000);
         }
-        
-        function showLoveNotification() {
-            const notification = document.createElement('div');
-            notification.className = 'love-notification';
-            notification.textContent = 'не забывай что я тебя люблю 💖';
-            notification.style.animation = 'loveNotification 10s ease-in-out forwards';
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 10000);
-        }
-        
-        function check500CoinsNotification() {
-            // Проверяем каждые 500 монет
-            if (totalCoinsEarned >= 500 && totalCoinsEarned >= last500CoinsNotification + 500) {
-                last500CoinsNotification = totalCoinsEarned - (totalCoinsEarned % 500);
-                showNotification("💝 Моя ты умничка! Уже " + last500CoinsNotification + " монет! 💖");
-            }
-        }
-        
-        // ========== МЕНЮ ==========
+
+        // ========== ОПТИМИЗИРОВАННОЕ МЕНЮ ==========
         function setupMenu() {
             menuButton.addEventListener('click', toggleMenu);
             menuOverlay.addEventListener('click', closeMenu);
@@ -1797,10 +1490,9 @@
             vibrationToggle.addEventListener('change', toggleVibration);
             soundToggle.addEventListener('change', toggleSound);
             
-            themeToggle.checked = darkTheme;
-            vibrationToggle.checked = vibration;
-            soundToggle.checked = sound;
-            document.getElementById('musicToggle').checked = musicEnabled;
+            themeToggle.checked = game.darkTheme;
+            vibrationToggle.checked = game.vibration;
+            soundToggle.checked = game.sound;
         }
         
         function toggleMenu() {
@@ -1824,8 +1516,8 @@
         }
         
         function toggleTheme() {
-            darkTheme = !darkTheme;
-            if (darkTheme) {
+            game.darkTheme = !game.darkTheme;
+            if (game.darkTheme) {
                 document.body.classList.remove('light-theme');
             } else {
                 document.body.classList.add('light-theme');
@@ -1834,20 +1526,20 @@
         }
         
         function toggleVibration() {
-            vibration = !vibration;
-            if (vibration && navigator.vibrate) {
+            game.vibration = !game.vibration;
+            if (game.vibration && navigator.vibrate) {
                 navigator.vibrate(50);
             }
             saveGame();
         }
         
         function toggleSound() {
-            sound = !sound;
+            game.sound = !game.sound;
             saveGame();
         }
         
         function updateMenuStats() {
-            const minutes = Math.floor(playTime / 60);
+            const minutes = Math.floor(game.playTime / 60);
             const hours = Math.floor(minutes / 60);
             let timeText = '';
             
@@ -1858,247 +1550,189 @@
             }
             
             playTimeStat.textContent = timeText;
-            totalCoinsStat.textContent = totalCoinsEarned;
-            totalDiamondsStat.textContent = diamonds;
-            heartsBoughtStat.textContent = heartsBought;
-            animalsUnlockedCount.textContent = `${unlockedAnimals}/50`;
+            totalCoinsStat.textContent = game.totalCoinsEarned;
+            totalDiamondsStat.textContent = game.diamonds;
+            heartsBoughtStat.textContent = game.heartsBought;
+            animalsUnlockedCount.textContent = `${game.unlockedAnimals}/100`;
         }
-        
-        // ========== ОСНОВНАЯ ИГРА ==========
-        function gameLoop() {
-            const now = Date.now();
-            const delta = now - lastUpdate;
-            
-            if (heartsPerSecond > 0) {
-                hearts += (heartsPerSecond * delta) / 1000;
-                
-                if (hearts >= 10) {
-                    const earnedCoins = Math.floor(hearts / 10);
-                    if (earnedCoins > 0) {
-                        addCoins(earnedCoins);
-                        hearts = hearts % 10;
-                        
-                        checkEvery5Coins();
-                        checkDiamondBonus();
-                        checkAnimalCollection();
-                        check500CoinsNotification();
-                    }
-                }
-            }
-            
-            lastUpdate = now;
-            updateDisplay();
-            requestAnimationFrame(gameLoop);
-        }
-        
-        function addCoins(amount) {
-            coins += amount;
-            totalCoinsEarned += amount;
-        }
-        
-        function checkEvery5Coins() {
-            if (totalCoinsEarned >= 5 && totalCoinsEarned >= lastBonusCoins + 5) {
-                addCoins(5);
-                lastBonusCoins = totalCoinsEarned;
-                spawnKiss();
-            }
-        }
-        
-        function checkDiamondBonus() {
-            if (totalCoinsEarned >= 100 && totalCoinsEarned >= lastDiamondBonus + 100) {
-                const diamondsEarned = Math.floor((totalCoinsEarned - lastDiamondBonus) / 100);
-                if (diamondsEarned > 0) {
-                    diamonds += diamondsEarned;
-                    lastDiamondBonus = totalCoinsEarned - (totalCoinsEarned % 100);
-                    
-                    showNotification(`💎 Получено ${diamondsEarned} алмаз${diamondsEarned > 1 ? 'а' : ''} за монеты!`);
-                    updateDiamondsDisplay();
-                    saveGame();
-                }
-            }
-        }
-        
-        function checkAnimalCollection() {
-            const earnedAnimals = Math.floor(totalCoinsEarned / 500);
-            if (earnedAnimals > unlockedAnimals && earnedAnimals <= 50) {
-                const newAnimals = earnedAnimals - unlockedAnimals;
-                unlockedAnimals = earnedAnimals;
-                
-                if (newAnimals > 0) {
-                    showNotification(`🎉 Открыт${newAnimals > 1 ? 'о' : ''} ${newAnimals} новый${newAnimals > 1 ? 'ых' : ''} звер${newAnimals > 1 ? 'ьков' : 'ёк'}!`);
-                    renderGallery();
-                    saveGame();
-                }
-            }
-        }
-        
-        function updateDisplay() {
-            coinsEl.textContent = coins;
-            heartsEl.textContent = hearts.toFixed(1);
-            heartsPerSecondEl.textContent = heartsPerSecond.toFixed(1);
-            clickPowerEl.textContent = clickPower;
-            diamondsCounter.textContent = diamonds;
-        }
-        
-        function updateDiamondsDisplay() {
-            diamondsCounter.textContent = diamonds;
-            totalDiamondsStat.textContent = diamonds;
-        }
-        
-        // ========== СИСТЕМА СОХРАНЕНИЯ ==========
-        const SAVE_KEY = 'loveClicker_v6';
-        let autoSaveInterval;
-        
-        function saveGame() {
-            try {
-                const saveData = {
-                    coins: coins,
-                    hearts: hearts,
-                    clickPower: clickPower,
-                    heartsPerSecond: heartsPerSecond,
-                    diamonds: diamonds,
-                    totalCoinsEarned: totalCoinsEarned,
-                    lastBonusCoins: lastBonusCoins,
-                    lastDiamondBonus: lastDiamondBonus,
-                    last500CoinsNotification: last500CoinsNotification,
-                    heartsBought: heartsBought,
-                    playTime: playTime,
-                    unlockedAnimals: unlockedAnimals,
-                    
-                    darkTheme: darkTheme,
-                    vibration: vibration,
-                    sound: sound,
-                    musicEnabled: musicEnabled,
-                    
-                    diamondBonusCount: diamondBonusUpgrade.count || 0,
-                    specialHeartCount: specialHeartUpgrade.count || 0,
-                    
-                    upgrades: upgrades.map(u => ({
-                        id: u.id,
-                        count: u.count,
-                        cost: u.cost,
-                        unlocked: u.unlocked
-                    })),
-                    
-                    saveTime: Date.now(),
-                    version: '6.0'
-                };
-                
-                localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
-                showSaveIcon();
-                return true;
-                
-            } catch (error) {
-                console.error('Ошибка сохранения:', error);
-                return false;
-            }
-        }
-        
-        function loadGame() {
-            try {
-                const savedData = localStorage.getItem(SAVE_KEY);
-                if (!savedData) return false;
-                
-                const save = JSON.parse(savedData);
-                if (save.version !== '6.0') return false;
-                
-                coins = save.coins || 0;
-                hearts = save.hearts || 0;
-                clickPower = save.clickPower || 1;
-                heartsPerSecond = save.heartsPerSecond || 0;
-                diamonds = save.diamonds || 0;
-                totalCoinsEarned = save.totalCoinsEarned || 0;
-                lastBonusCoins = save.lastBonusCoins || 0;
-                lastDiamondBonus = save.lastDiamondBonus || 0;
-                last500CoinsNotification = save.last500CoinsNotification || 0;
-                heartsBought = save.heartsBought || 0;
-                playTime = save.playTime || 0;
-                unlockedAnimals = save.unlockedAnimals || 0;
-                
-                darkTheme = save.darkTheme !== undefined ? save.darkTheme : true;
-                vibration = save.vibration !== undefined ? save.vibration : true;
-                sound = save.sound !== undefined ? save.sound : true;
-                musicEnabled = save.musicEnabled !== undefined ? save.musicEnabled : true;
-                
-                diamondBonusUpgrade.count = save.diamondBonusCount || 0;
-                specialHeartUpgrade.count = save.specialHeartCount || 0;
-                
-                if (save.upgrades) {
-                    save.upgrades.forEach(savedUpgrade => {
-                        const upgrade = upgrades.find(u => u.id === savedUpgrade.id);
-                        if (upgrade) {
-                            upgrade.count = savedUpgrade.count || 0;
-                            upgrade.cost = savedUpgrade.cost || upgrade.baseCost * Math.pow(1.5, upgrade.count);
-                            upgrade.unlocked = savedUpgrade.unlocked !== undefined ? savedUpgrade.unlocked : false;
-                        }
-                    });
-                }
-                
-                return true;
-                
-            } catch (error) {
-                console.error('Ошибка загрузки:', error);
-                return false;
-            }
-        }
-        
-        function startAutoSave() {
-            if (autoSaveInterval) clearInterval(autoSaveInterval);
-            autoSaveInterval = setInterval(saveGame, 30000);
-        }
-        
-        function showSaveIcon() {
-            const saveIcon = document.getElementById('saveIcon');
-            saveIcon.style.opacity = '1';
-            saveIcon.style.transform = 'translateY(0)';
-            
-            setTimeout(() => {
-                saveIcon.style.opacity = '0';
-                saveIcon.style.transform = 'translateY(10px)';
-            }, 2000);
-        }
-        
+
         // ========== ФУНКЦИИ МАГАЗИНА ==========
-        function buyUpgrade(id) {
-            const upgrade = upgrades.find(u => u.id === id);
-            if (!upgrade || !upgrade.unlocked || coins < upgrade.cost || upgrade.count >= upgrade.maxCount) return;
+        function renderShopUpgrades() {
+            if (!upgradesList) return;
             
-            coins -= upgrade.cost;
-            heartsPerSecond += upgrade.heartsPerSecond;
+            const fragment = document.createDocumentFragment();
+            
+            // Обычные улучшения
+            game.upgrades.forEach(upgrade => {
+                const totalCount = game.upgrades.reduce((sum, u) => sum + u.count, 0);
+                upgrade.unlocked = totalCount >= upgrade.requiredCount;
+                
+                const canAfford = game.coins >= upgrade.cost && upgrade.unlocked;
+                const upgradeEl = createShopUpgradeElement(upgrade, canAfford);
+                fragment.appendChild(upgradeEl);
+            });
+            
+            // Улучшение силы клика
+            const clickUpgradeCost = game.clickPower * 100;
+            const canAffordClick = game.coins >= clickUpgradeCost;
+            const clickUpgradeEl = document.createElement('div');
+            clickUpgradeEl.className = 'upgrade-item';
+            clickUpgradeEl.innerHTML = `
+                <div class="upgrade-header">
+                    <div class="upgrade-name">💪 Усиление клика</div>
+                    <div class="upgrade-cost">${clickUpgradeCost} 🪙</div>
+                </div>
+                <div style="color: var(--accent); font-size: 0.9rem; margin: 5px 0;">
+                    Увеличивает силу каждого клика
+                </div>
+                <div class="upgrade-info">
+                    <div>Текущая сила: ${game.clickPower}</div>
+                    <div>Следующая: ${game.clickPower + 1}</div>
+                </div>
+                <button class="buy-btn ${canAffordClick ? 'enabled' : 'disabled'}" 
+                        onclick="upgradeClickPower()" 
+                        ${canAffordClick ? '' : 'disabled'}>
+                    ${canAffordClick ? 'Ну все, теперь можно 💪' : 'Не не не, еще собери'}
+                </button>
+            `;
+            fragment.appendChild(clickUpgradeEl);
+            
+            // Особое сердечко для Дианы
+            const canAffordHeart = game.diamonds >= specialHeartUpgrade.diamondCost;
+            const specialHeartEl = document.createElement('div');
+            specialHeartEl.className = 'upgrade-item';
+            specialHeartEl.style.borderColor = '#ff6b8b';
+            specialHeartEl.style.boxShadow = '0 5px 15px rgba(255, 107, 139, 0.1)';
+            specialHeartEl.innerHTML = `
+                <div class="upgrade-header">
+                    <div class="upgrade-name">${specialHeartUpgrade.name}</div>
+                    <div class="diamond-cost">${specialHeartUpgrade.diamondCost} 💎</div>
+                </div>
+                <div style="color: var(--accent); font-size: 0.9rem; margin: 5px 0;">
+                    ${specialHeartUpgrade.description}
+                </div>
+                <div class="upgrade-info">
+                    <div>Куплено: ${specialHeartUpgrade.count}</div>
+                    <div>+250 монет 💰</div>
+                </div>
+                <button class="buy-btn ${canAffordHeart ? 'enabled' : 'disabled'}" 
+                        onclick="buySpecialHeart()" 
+                        ${canAffordHeart ? '' : 'disabled'}
+                        style="background: linear-gradient(45deg, #ff6b8b, #c77dff);">
+                    ${canAffordHeart ? 'Ну все, теперь можно 💝' : 'Не не не, еще собери'}
+                </button>
+            `;
+            fragment.appendChild(specialHeartEl);
+            
+            // Бонус 500 монет за алмазы
+            const canAffordBonus = game.diamonds >= diamondBonusUpgrade.diamondCost;
+            const diamondBonusEl = document.createElement('div');
+            diamondBonusEl.className = 'upgrade-item';
+            diamondBonusEl.style.borderColor = '#ffd700';
+            diamondBonusEl.style.boxShadow = '0 5px 15px rgba(255, 215, 0, 0.1)';
+            diamondBonusEl.innerHTML = `
+                <div class="upgrade-header">
+                    <div class="upgrade-name">${diamondBonusUpgrade.name}</div>
+                    <div class="diamond-cost">${diamondBonusUpgrade.diamondCost} 💎</div>
+                </div>
+                <div style="color: var(--accent); font-size: 0.9rem; margin: 5px 0;">
+                    ${diamondBonusUpgrade.description}
+                </div>
+                <div class="upgrade-info">
+                    <div>Куплено: ${diamondBonusUpgrade.count}</div>
+                    <div>Огромный бонус!</div>
+                </div>
+                <button class="buy-btn ${canAffordBonus ? 'enabled' : 'disabled'}" 
+                        onclick="buyDiamondBonus()" 
+                        ${canAffordBonus ? '' : 'disabled'}
+                        style="background: linear-gradient(45deg, #ffd700, #ff6b8b);">
+                    ${canAffordBonus ? 'Ну все, теперь можно 💎' : 'Не не не, еще собери'}
+                </button>
+            `;
+            fragment.appendChild(diamondBonusEl);
+            
+            upgradesList.innerHTML = '';
+            upgradesList.appendChild(fragment);
+        }
+
+        function createShopUpgradeElement(upgrade, canAfford) {
+            const div = document.createElement('div');
+            const isLocked = !upgrade.unlocked;
+            div.className = `upgrade-item ${isLocked ? 'locked' : ''}`;
+            
+            const requirementText = isLocked ? 
+                `🔒 Откроется после ${upgrade.requiredCount} сердечек` : 
+                '';
+            
+            const buttonText = canAfford ? 
+                'Ну все, теперь можно 💝' : 
+                'Не не не, еще собери';
+                
+            div.innerHTML = `
+                <div class="upgrade-header">
+                    <div class="upgrade-name">
+                        ${isLocked ? '🔒' : ''} ${upgrade.name}
+                    </div>
+                    <div class="upgrade-cost">${upgrade.cost} 🪙</div>
+                </div>
+                <div style="color: var(--accent); font-size: 0.9rem; margin: 5px 0;">
+                    ${upgrade.description}
+                </div>
+                ${requirementText ? `<div class="upgrade-requirement">${requirementText}</div>` : ''}
+                <div class="upgrade-info">
+                    <div class="upgrade-effect">
+                        <span>+${upgrade.heartsPerSecond} 💖/сек</span>
+                    </div>
+                    <div class="upgrade-count">
+                        Куплено: ${upgrade.count}
+                    </div>
+                </div>
+                <button class="buy-btn ${canAfford && !isLocked ? 'enabled' : 'disabled'}" 
+                        onclick="buyUpgrade(${upgrade.id})" 
+                        ${canAfford && !isLocked ? '' : 'disabled'}>
+                    ${buttonText}
+                </button>
+            `;
+            return div;
+        }
+
+        function buyUpgrade(id) {
+            const upgrade = game.upgrades.find(u => u.id === id);
+            if (!upgrade || !upgrade.unlocked || game.coins < upgrade.cost) return;
+            
+            game.coins -= upgrade.cost;
+            game.heartsPerSecond += upgrade.heartsPerSecond;
             upgrade.count++;
             upgrade.cost = Math.floor(upgrade.baseCost * Math.pow(1.5, upgrade.count));
             
             updateDisplay();
             renderShopUpgrades();
             showNotification(`🎉 Купили ${upgrade.name}!`);
-            checkUpgradesUnlock();
-            setTimeout(saveGame, 500);
+            saveGame();
         }
         
         function upgradeClickPower() {
-            const cost = clickPower * 100;
-            if (coins < cost) return;
+            const cost = game.clickPower * 100;
+            if (game.coins < cost) return;
             
-            coins -= cost;
-            clickPower += 1;
+            game.coins -= cost;
+            game.clickPower += 1;
             updateDisplay();
             renderShopUpgrades();
-            showNotification(`💪 Сила клика: ${clickPower}`);
-            setTimeout(saveGame, 500);
+            showNotification(`💪 Сила клика: ${game.clickPower}`);
+            saveGame();
         }
         
-        // ИЗМЕНЕНО: Сердечко для Дианы теперь за 5 алмазов и дает 250 монет
         function buySpecialHeart() {
-            if (diamonds < specialHeartUpgrade.diamondCost) {
+            if (game.diamonds < specialHeartUpgrade.diamondCost) {
                 showNotification(`💎 Не не не, еще собери алмазов!`);
                 return;
             }
             
-            diamonds -= specialHeartUpgrade.diamondCost;
+            game.diamonds -= specialHeartUpgrade.diamondCost;
             specialHeartUpgrade.count++;
-            heartsBought++;
+            game.heartsBought++;
             
-            // Дарим 250 монет
             addCoins(250);
             
             updateDiamondsDisplay();
@@ -2107,111 +1741,60 @@
             
             showNotification("💖 Моя ты хорошая! +250 монет за алмазы!");
             
-            if (vibration && navigator.vibrate) {
+            if (game.vibration && navigator.vibrate) {
                 navigator.vibrate([100, 50, 100]);
             }
             
-            setTimeout(saveGame, 500);
+            saveGame();
         }
         
         function buyDiamondBonus() {
-            if (diamonds < diamondBonusUpgrade.diamondCost) {
+            if (game.diamonds < diamondBonusUpgrade.diamondCost) {
                 showNotification(`💎 Не не не, еще собери алмазов!`);
                 return;
             }
             
-            diamonds -= diamondBonusUpgrade.diamondCost;
+            game.diamonds -= diamondBonusUpgrade.diamondCost;
             diamondBonusUpgrade.count++;
             
-            // Дарим 500 монет
             addCoins(500);
-            
-            // Показываем полнoэкранный поцелуй
-            showFullscreenKiss();
             
             updateDiamondsDisplay();
             renderShopUpgrades();
             
-            showNotification("💋 ПОЦЕЛУЙ! +500 монет за алмазы! 💖");
+            showNotification("💰 +500 монет за алмазы! 💖");
             
-            // Вибрация
-            if (vibration && navigator.vibrate) {
+            if (game.vibration && navigator.vibrate) {
                 navigator.vibrate([100, 50, 200, 50, 100]);
             }
             
-            setTimeout(saveGame, 500);
+            saveGame();
         }
-        
-        // ========== ПОЦЕЛУЙЧИКИ ==========
-        function spawnKiss() {
-            const kiss = document.createElement('div');
-            kiss.className = 'kiss';
-            kiss.textContent = '💋';
-            kiss.style.left = Math.random() * 70 + 15 + 'vw';
-            
-            kiss.addEventListener('click', function(e) {
-                e.stopPropagation();
-                catchKiss(this);
-            });
-            
-            kiss.addEventListener('touchstart', function(e) {
-                e.stopPropagation();
-                catchKiss(this);
-                e.preventDefault();
-            }, { passive: false });
-            
-            document.body.appendChild(kiss);
-            
-            setTimeout(() => {
-                if (kiss.parentNode) {
-                    kiss.remove();
-                }
-            }, 6000);
-        }
-        
-        function catchKiss(kissElement) {
-            if (kissElement.classList.contains('caught')) return;
-            
-            kissElement.classList.add('caught');
-            addCoins(50);
-            showNotification("💋 Поймала поцелуйчик! +50 монет!");
-            
-            setTimeout(() => {
-                if (kissElement.parentNode) {
-                    kissElement.remove();
-                }
-            }, 800);
-        }
-        
-        function showNotification(text) {
-            notification.textContent = text;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-        
+
         // ========== ОСНОВНОЙ КЛИК ==========
-        heartBtn.addEventListener('click', (e) => {
-            hearts += clickPower;
+        heartBtn.addEventListener('click', () => {
+            game.hearts += game.clickPower;
             
-            if (hearts >= 10) {
-                const earnedCoins = Math.floor(hearts / 10);
+            if (game.hearts >= 10) {
+                const earnedCoins = Math.floor(game.hearts / 10);
                 if (earnedCoins > 0) {
                     addCoins(earnedCoins);
-                    hearts = hearts % 10;
-                    
-                    checkEvery5Coins();
-                    checkDiamondBonus();
-                    checkAnimalCollection();
-                    check500CoinsNotification();
+                    game.hearts = game.hearts % 10;
+                    checkProgression();
                 }
             }
             
             updateDisplay();
         });
-        
+
+        function showNotification(text) {
+            notification.textContent = text;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
         // Экспортируем функции для HTML
         window.buyUpgrade = buyUpgrade;
         window.upgradeClickPower = upgradeClickPower;
