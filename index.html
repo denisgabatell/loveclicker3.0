@@ -190,6 +190,26 @@
             50% { transform: translateY(-10px); }
         }
         
+        /* КНОПКА VIP МАГАЗИНА */
+        .vip-shop-button {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(45deg, #ffd700, #ffaa00);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+        
         /* ОКНО ИНФОРМАЦИИ ОБ ОБНОВЛЕНИИ */
         .update-overlay {
             position: fixed;
@@ -553,6 +573,16 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
         
+        .diamond-cost {
+            background: linear-gradient(45deg, rgba(185, 242, 255, 0.2), rgba(185, 242, 255, 0.1));
+            color: #b9f2ff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(185, 242, 255, 0.2);
+        }
+        
         .upgrade-info {
             display: flex;
             justify-content: space-between;
@@ -685,17 +715,19 @@
             display: flex;
             gap: 10px;
             margin-top: 10px;
+            width: 100%;
         }
         
         .pet-btn {
             background: linear-gradient(45deg, #00ff9d, #48cae4);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
             flex: 1;
+            font-size: 0.8rem;
         }
         
         .pet-btn:hover:not(:disabled) {
@@ -714,6 +746,17 @@
         
         .pet-btn.pet {
             background: linear-gradient(45deg, #ff6b8b, #c77dff);
+        }
+        
+        .pet-btn.satiety {
+            background: linear-gradient(45deg, #ff00ff, #ff0080);
+        }
+        
+        .pet-time-left {
+            font-size: 0.7rem;
+            color: #ffccd5;
+            margin-top: 5px;
+            text-align: center;
         }
         
         @keyframes bounce {
@@ -794,6 +837,7 @@
             align-items: center;
             justify-content: center;
             border: 2px solid transparent;
+            position: relative;
         }
         
         .gallery-item.unlocked {
@@ -808,6 +852,13 @@
         .animal-emoji {
             font-size: 24px;
             margin-bottom: 5px;
+        }
+        
+        .animal-cost {
+            font-size: 0.6rem;
+            color: #ffccd5;
+            margin-top: 3px;
+            text-align: center;
         }
         
         /* ОКНО МЕНЮ */
@@ -915,6 +966,121 @@
             background: #444;
             cursor: not-allowed;
             opacity: 0.6;
+        }
+        
+        /* ОКНО VIP МАГАЗИНА */
+        .vip-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            display: none;
+        }
+        
+        .vip-window {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1b2e 100%);
+            z-index: 1003;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid #ffd700;
+            display: none;
+            overflow-y: auto;
+        }
+        
+        .vip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .vip-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .close-vip {
+            background: #ffd700;
+            color: #000;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .vip-item {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 170, 0, 0.05));
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        
+        .vip-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .vip-item-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .vip-item-cost {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 170, 0, 0.2));
+            color: #000;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .vip-btn {
+            background: linear-gradient(45deg, #ffd700, #ffaa00);
+            color: #000;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .vip-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        
+        .vip-btn:disabled {
+            background: #444;
+            cursor: not-allowed;
+            opacity: 0.6;
+            color: white;
         }
         
         .switch {
@@ -1113,7 +1279,7 @@
                 font-size: 1.1rem;
             }
             
-            .shop-button, .gallery-button, .pet-button, .menu-button {
+            .shop-button, .gallery-button, .pet-button, .menu-button, .vip-shop-button {
                 width: 45px;
                 height: 45px;
                 font-size: 20px;
@@ -1197,6 +1363,7 @@
                     <li>Кнопка 🐾 справа открывает галерею</li>
                     <li>Кнопка ⚙️ вверху справа открывает настройки</li>
                     <li>Кнопка 🐰 слева открывает питомца</li>
+                    <li>Кнопка VIP сверху слева открывает бусты</li>
                 </ul>
             </div>
             
@@ -1260,7 +1427,11 @@
                 <button class="pet-btn pet" id="petPetBtn" onclick="petPet()">
                     ✨ Погладить зайку
                 </button>
+                <button class="pet-btn satiety" id="satietyBtn" onclick="buySatiety()">
+                    🕒 Сытость 30мин (500💎)
+                </button>
             </div>
+            <div class="pet-time-left" id="petTimeLeft"></div>
         </div>
     </div>
     
@@ -1273,7 +1444,8 @@
         </div>
         <div style="color: #ffccd5; font-size: 0.9rem; margin-bottom: 15px; text-align: center;">
             Открыто: <span id="unlockedCount">0</span>/100<br>
-            Первые 50 открываются за алмазы, остальные за перерождения
+            Первые 50: каждые 500 алмазов (нужно: <span id="diamondsNeeded">0</span>💎)<br>
+            Остальные 50: за перерождения (нужно: <span id="rebirthsNeeded">0</span>🔄)
         </div>
         <div class="gallery-grid" id="galleryGrid">
             <!-- Галерея будет загружена здесь -->
@@ -1320,6 +1492,10 @@
                 <span id="totalDiamonds">0</span>
             </div>
             <div class="menu-item">
+                <span>💎 От зайки:</span>
+                <span id="diamondsFromPet">0</span>
+            </div>
+            <div class="menu-item">
                 <span>💖 Всего сердечек:</span>
                 <span id="totalHearts">0</span>
             </div>
@@ -1350,8 +1526,25 @@
         </div>
     </div>
     
+    <!-- ОКНО VIP МАГАЗИНА -->
+    <div class="vip-overlay" id="vipOverlay"></div>
+    <div class="vip-window" id="vipWindow">
+        <div class="vip-header">
+            <div class="vip-title">⭐ VIP Бусты</div>
+            <button class="close-vip" id="closeVip">✕</button>
+        </div>
+        <div id="vipContent">
+            <!-- VIP карточки будут здесь -->
+        </div>
+    </div>
+    
     <!-- УВЕДОМЛЕНИЯ -->
     <div class="notification" id="notification"></div>
+    
+    <!-- КНОПКА VIP МАГАЗИНА -->
+    <div class="vip-shop-button" id="vipShopButton">
+        VIP
+    </div>
     
     <!-- КНОПКА МЕНЮ -->
     <div class="menu-button" id="menuButton">
@@ -1422,10 +1615,12 @@
             totalCoins: 0,
             totalDiamonds: 0,
             totalHearts: 0,
+            diamondsFromPet: 0,
             playTime: 0,
             musicEnabled: true,
             darkTheme: true,
             vibration: true,
+            gamePaused: false, // Пауза игры когда питомец голоден
             
             // Магазин улучшений
             upgrades: [],
@@ -1437,7 +1632,6 @@
             
             // Галерея
             unlockedAnimals: 0,
-            animalsUnlockedByDiamonds: 0,
             
             // Питомец
             pet: {
@@ -1447,8 +1641,14 @@
                 petDiamonds: 0,
                 isHungry: false,
                 nextHungerTime: 0,
+                lastPetTime: 0,
+                satietyUntil: 0,
                 hungerTimer: null
-            }
+            },
+            
+            // VIP бусты
+            activeBoost: null,
+            boostEndTime: 0
         };
         
         // Список животных для галереи
@@ -1465,42 +1665,90 @@
             "🦋", "🐛", "🐌", "🦗", "🐜", "🦟", "🦂", "🕸️", "🦠", "🧬"
         ];
         
-        // Улучшения для магазина
+        // Улучшения для магазина (с дополнительными карточками)
         const upgradesData = [
             { 
                 id: 1, 
-                name: "💖 Милое сердечко", 
-                description: "Маленькая порция любви", 
-                baseCost: 15, 
-                heartsPerSecond: 1
+                name: "💪 Усиление клика", 
+                description: "Увеличивает силу каждого клика", 
+                baseCost: 50, 
+                effect: "clickPower"
             },
             { 
                 id: 2, 
-                name: "💕 Парящее сердечко", 
-                description: "Летает вокруг экрана", 
-                baseCost: 50, 
-                heartsPerSecond: 3
+                name: "💖 Милое сердечко", 
+                description: "Маленькая порция любви", 
+                baseCost: 15, 
+                effect: "heartsPerSecond",
+                effectValue: 1
             },
             { 
                 id: 3, 
-                name: "💘 Сердце Купидона", 
-                description: "Стрела попадает прямо в цель", 
-                baseCost: 150, 
-                heartsPerSecond: 10
+                name: "💕 Парящее сердечко", 
+                description: "Летает вокруг экрана", 
+                baseCost: 50, 
+                effect: "heartsPerSecond",
+                effectValue: 3
             },
             { 
                 id: 4, 
-                name: "💝 Подарочное сердце", 
-                description: "С красивым бантиком", 
-                baseCost: 400, 
-                heartsPerSecond: 25
+                name: "💘 Сердце Купидона", 
+                description: "Стрела попадает прямо в цель", 
+                baseCost: 150, 
+                effect: "heartsPerSecond",
+                effectValue: 10
             },
             { 
                 id: 5, 
+                name: "💝 Подарочное сердце", 
+                description: "С красивым бантиком", 
+                baseCost: 400, 
+                effect: "heartsPerSecond",
+                effectValue: 25
+            },
+            { 
+                id: 6, 
                 name: "🐵 Обезьянка любви", 
                 description: "Забавный помощник влюбленных", 
                 baseCost: 1000, 
-                heartsPerSecond: 70
+                effect: "heartsPerSecond",
+                effectValue: 70
+            },
+            { 
+                id: 7, 
+                name: "🌈 Радужное сердце", 
+                description: "Переливается всеми цветами", 
+                baseCost: 2500, 
+                effect: "heartsPerSecond",
+                effectValue: 150
+            }
+        ];
+        
+        // VIP бусты
+        const vipBoosts = [
+            {
+                id: 1,
+                name: "⚡ Буст на 30 секунд",
+                description: "Один клик дает 30 монет",
+                duration: 30,
+                cost: 100,
+                clickBonus: 30
+            },
+            {
+                id: 2,
+                name: "⚡⚡ Буст на 30 секунд",
+                description: "Один клик дает 50 монет",
+                duration: 30,
+                cost: 150,
+                clickBonus: 50
+            },
+            {
+                id: 3,
+                name: "⚡⚡⚡ Буст на 45 секунд",
+                description: "Один клик дает 85 монет",
+                duration: 45,
+                cost: 250,
+                clickBonus: 85
             }
         ];
         
@@ -1518,6 +1766,7 @@
             let musicPlaying = false;
             let lastAchievementCheck = 0;
             let lastLoveNotification = 0;
+            let hungerNotificationShown = false;
             
             // Простая симуляция загрузки
             let progress = 0;
@@ -1565,6 +1814,7 @@
                     document.getElementById('shopButton').style.display = 'flex';
                     document.getElementById('galleryButton').style.display = 'flex';
                     document.getElementById('petButton').style.display = 'flex';
+                    document.getElementById('vipShopButton').style.display = 'flex';
                     
                     // Запускаем фоновую музыку
                     if (game.musicEnabled) {
@@ -1683,6 +1933,31 @@
                 document.getElementById('galleryWindow').style.display = 'none';
             });
             
+            // ========== КНОПКА VIP МАГАЗИНА ==========
+            document.getElementById('vipShopButton').addEventListener('click', function() {
+                console.log('Кнопка VIP магазина нажата');
+                document.getElementById('vipOverlay').style.display = 'block';
+                document.getElementById('vipWindow').style.display = 'block';
+                renderVIPBoosts();
+            });
+            
+            document.getElementById('vipShopButton').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                document.getElementById('vipOverlay').style.display = 'block';
+                document.getElementById('vipWindow').style.display = 'block';
+                renderVIPBoosts();
+            });
+            
+            document.getElementById('closeVip').addEventListener('click', function() {
+                document.getElementById('vipOverlay').style.display = 'none';
+                document.getElementById('vipWindow').style.display = 'none';
+            });
+            
+            document.getElementById('vipOverlay').addEventListener('click', function() {
+                document.getElementById('vipOverlay').style.display = 'none';
+                document.getElementById('vipWindow').style.display = 'none';
+            });
+            
             // ========== КНОПКА МЕНЮ/НАСТРОЕК ==========
             document.getElementById('menuButton').addEventListener('click', function() {
                 console.log('Кнопка меню нажата');
@@ -1740,18 +2015,51 @@
             
             // ========== ФУНКЦИИ ДЛЯ УЛУЧШЕНИЙ ==========
             function initUpgrades() {
-                game.upgrades = upgradesData.map(upgrade => ({
-                    ...upgrade,
-                    cost: upgrade.baseCost,
-                    count: 0
-                }));
+                if (game.upgrades.length === 0) {
+                    game.upgrades = upgradesData.map(upgrade => ({
+                        ...upgrade,
+                        cost: upgrade.baseCost,
+                        count: 0
+                    }));
+                }
             }
             
             function renderShopUpgrades() {
                 const shopContent = document.getElementById('shopContent');
                 shopContent.innerHTML = '';
                 
+                // Сначала рендерим усиление клика (должно быть первым)
+                const clickUpgrade = game.upgrades.find(u => u.effect === "clickPower");
+                if (clickUpgrade) {
+                    const clickCost = clickUpgrade.cost * game.rebirthMultiplier;
+                    const canAffordClick = game.coins >= clickCost;
+                    const clickUpgradeEl = document.createElement('div');
+                    clickUpgradeEl.className = 'upgrade-item';
+                    
+                    clickUpgradeEl.innerHTML = `
+                        <div class="upgrade-header">
+                            <div class="upgrade-name">${clickUpgrade.name}</div>
+                            <div class="upgrade-cost">${formatNumber(clickCost)} 🪙</div>
+                        </div>
+                        <div style="color: #ffccd5; font-size: 0.85rem; margin: 5px 0;">
+                            ${clickUpgrade.description}
+                        </div>
+                        <div class="upgrade-info">
+                            <div>Текущая сила: ${formatNumber(game.clickPower * game.rebirthMultiplier)}</div>
+                            <div>Следующая: ${formatNumber((game.clickPower + 1) * game.rebirthMultiplier)}</div>
+                        </div>
+                        <button class="buy-btn" onclick="buyUpgrade(${clickUpgrade.id})" ${canAffordClick ? '' : 'disabled'}>
+                            ${canAffordClick ? 'Купить' : 'Недостаточно монет'}
+                        </button>
+                    `;
+                    
+                    shopContent.appendChild(clickUpgradeEl);
+                }
+                
+                // Затем остальные улучшения
                 game.upgrades.forEach(upgrade => {
+                    if (upgrade.effect === "clickPower") return; // Уже отрендерили
+                    
                     const canAfford = game.coins >= upgrade.cost;
                     const upgradeEl = document.createElement('div');
                     upgradeEl.className = 'upgrade-item';
@@ -1765,7 +2073,7 @@
                             ${upgrade.description}
                         </div>
                         <div class="upgrade-info">
-                            <div>+${upgrade.heartsPerSecond} 💖/сек</div>
+                            <div>+${upgrade.effectValue} 💖/сек</div>
                             <div>Куплено: ${upgrade.count}</div>
                         </div>
                         <button class="buy-btn" onclick="buyUpgrade(${upgrade.id})" ${canAfford ? '' : 'disabled'}>
@@ -1776,34 +2084,46 @@
                     shopContent.appendChild(upgradeEl);
                 });
                 
-                // Добавляем улучшение силы клика
-                const clickUpgradeCost = game.clickPower * 50 * game.rebirthMultiplier;
-                const canAffordClick = game.coins >= clickUpgradeCost;
-                const clickUpgradeEl = document.createElement('div');
-                clickUpgradeEl.className = 'upgrade-item';
-                clickUpgradeEl.innerHTML = `
+                // Добавляем покупку монет за алмазы
+                const diamondExchangeEl = document.createElement('div');
+                diamondExchangeEl.className = 'upgrade-item';
+                diamondExchangeEl.style.borderColor = '#b9f2ff';
+                
+                const canAffordDiamonds = game.diamonds >= 5;
+                diamondExchangeEl.innerHTML = `
                     <div class="upgrade-header">
-                        <div class="upgrade-name">💪 Усиление клика</div>
-                        <div class="upgrade-cost">${formatNumber(clickUpgradeCost)} 🪙</div>
+                        <div class="upgrade-name">💰 Покупка монет</div>
+                        <div class="diamond-cost">5 💎</div>
                     </div>
                     <div style="color: #ffccd5; font-size: 0.85rem; margin: 5px 0;">
-                        Увеличивает силу каждого клика
+                        Обменяйте 5 алмазов на 100 монет
                     </div>
                     <div class="upgrade-info">
-                        <div>Текущая сила: ${formatNumber(game.clickPower * game.rebirthMultiplier)}</div>
-                        <div>Следующая: ${formatNumber((game.clickPower + 1) * game.rebirthMultiplier)}</div>
+                        <div>Получите: 100 🪙</div>
+                        <div>Отдайте: 5 💎</div>
                     </div>
-                    <button class="buy-btn" onclick="buyClickPower()" ${canAffordClick ? '' : 'disabled'}>
-                        ${canAffordClick ? 'Купить' : 'Недостаточно монет'}
+                    <button class="buy-btn" onclick="buyCoinsForDiamonds()" ${canAffordDiamonds ? '' : 'disabled'}
+                            style="background: linear-gradient(45deg, #b9f2ff, #48cae4);">
+                        ${canAffordDiamonds ? 'Обменять' : 'Недостаточно алмазов'}
                     </button>
                 `;
-                shopContent.appendChild(clickUpgradeEl);
+                
+                shopContent.appendChild(diamondExchangeEl);
             }
             
             // ========== ФУНКЦИИ ДЛЯ ГАЛЕРЕИ ==========
             function renderGallery() {
                 const galleryGrid = document.getElementById('galleryGrid');
                 const unlockedCount = document.getElementById('unlockedCount');
+                const diamondsNeeded = document.getElementById('diamondsNeeded');
+                const rebirthsNeeded = document.getElementById('rebirthsNeeded');
+                
+                // Рассчитываем сколько нужно для открытия
+                const diamondsForNext = Math.max(0, (Math.floor(game.unlockedAnimals / 2) + 1) * 500 - game.totalDiamonds);
+                const rebirthsForNext = Math.max(0, Math.ceil((game.unlockedAnimals - 50) / 2) - game.rebirthCount);
+                
+                diamondsNeeded.textContent = diamondsForNext;
+                rebirthsNeeded.textContent = rebirthsForNext;
                 
                 galleryGrid.innerHTML = '';
                 
@@ -1818,9 +2138,22 @@
                             <div style="font-size: 0.7rem; color: #ffd700;">#${i + 1}</div>
                         `;
                     } else {
+                        // Показываем стоимость для каждого животного
+                        let costText = "";
+                        if (i < 50) {
+                            // Первые 50 за алмазы
+                            const diamondsNeededForThis = Math.floor((i + 1) / 2) * 500;
+                            costText = `${diamondsNeededForThis}💎`;
+                        } else {
+                            // Остальные за перерождения
+                            const rebirthsNeededForThis = Math.ceil((i - 49) / 2);
+                            costText = `${rebirthsNeededForThis}🔄`;
+                        }
+                        
                         galleryItem.innerHTML = `
                             <div class="animal-emoji">❓</div>
-                            <div style="font-size: 0.7rem; color: #ffccd5;">??</div>
+                            <div style="font-size: 0.7rem; color: #ffccd5;">#${i + 1}</div>
+                            <div class="animal-cost">${costText}</div>
                         `;
                     }
                     
@@ -1831,19 +2164,24 @@
             }
             
             function checkGalleryUnlocks() {
-                // Первые 50 животных открываются за алмазы (каждые 500 алмазов)
-                const animalsByDiamonds = Math.min(50, Math.floor(game.totalDiamonds / 500));
+                // Первые 50 животных открываются за алмазы (каждые 500 алмазов = 1 животное)
+                const animalsByDiamonds = Math.min(50, Math.floor(game.totalDiamonds / 500) * 2);
                 
-                // Остальные 50 животных открываются за перерождения (каждое перерождение = 1 животное)
-                const animalsByRebirth = Math.min(50, game.rebirthCount);
+                // Остальные 50 животных открываются за перерождения (каждое перерождение = 2 животных)
+                const animalsByRebirth = Math.min(50, game.rebirthCount * 2);
                 
-                const newUnlockedAnimals = animalsByDiamonds + animalsByRebirth;
+                const newUnlockedAnimals = Math.min(100, animalsByDiamonds + animalsByRebirth);
                 
                 if (newUnlockedAnimals > game.unlockedAnimals) {
+                    const newlyUnlocked = newUnlockedAnimals - game.unlockedAnimals;
                     game.unlockedAnimals = newUnlockedAnimals;
-                    renderGallery();
-                    showNotification(`🎉 Открыто ${newUnlockedAnimals - game.unlockedAnimals + animalsByDiamonds} новых животных!`);
-                    saveGame();
+                    
+                    // Если открылось хотя бы одно новое животное
+                    if (newlyUnlocked > 0) {
+                        renderGallery();
+                        showNotification(`🎉 Открыто ${newlyUnlocked} новых животных!`);
+                        saveGame();
+                    }
                 }
             }
             
@@ -1856,16 +2194,49 @@
                 
                 const petHungerEl = document.getElementById('petHunger');
                 const feedPetBtn = document.getElementById('feedPetBtn');
+                const petPetBtn = document.getElementById('petPetBtn');
+                const satietyBtn = document.getElementById('satietyBtn');
+                const petTimeLeft = document.getElementById('petTimeLeft');
                 
-                if (game.pet.isHungry) {
-                    petHungerEl.textContent = 'Зайка голоден! 🥺';
-                    petHungerEl.className = 'pet-hunger hungry';
-                    feedPetBtn.disabled = false;
-                } else {
-                    petHungerEl.textContent = 'Зайка сыт и доволен! 🥕';
+                // Проверяем сытость
+                const now = Date.now();
+                const hasSatiety = game.pet.satietyUntil > now;
+                
+                if (hasSatiety) {
+                    const timeLeft = Math.ceil((game.pet.satietyUntil - now) / 1000 / 60);
+                    petTimeLeft.textContent = `Сытость: ${timeLeft} мин`;
+                    petTimeLeft.style.display = 'block';
+                    petHungerEl.textContent = 'Зайка сыт и доволен! 🥕 (сытость активна)';
                     petHungerEl.className = 'pet-hunger';
                     feedPetBtn.disabled = true;
+                } else {
+                    petTimeLeft.style.display = 'none';
+                    if (game.pet.isHungry) {
+                        petHungerEl.textContent = 'Зайка голоден! 🥺';
+                        petHungerEl.className = 'pet-hunger hungry';
+                        feedPetBtn.disabled = game.pet.carrots <= 0;
+                    } else {
+                        petHungerEl.textContent = 'Зайка сыт и доволен! 🥕';
+                        petHungerEl.className = 'pet-hunger';
+                        feedPetBtn.disabled = true;
+                    }
                 }
+                
+                // Проверяем можно ли погладить (раз в 2 минуты)
+                const twoMinutes = 2 * 60 * 1000;
+                const canPet = !game.pet.lastPetTime || (now - game.pet.lastPetTime) >= twoMinutes;
+                
+                if (canPet) {
+                    petPetBtn.disabled = false;
+                    petPetBtn.textContent = '✨ Погладить зайку';
+                } else {
+                    const timeLeft = Math.ceil((twoMinutes - (now - game.pet.lastPetTime)) / 1000);
+                    petPetBtn.disabled = true;
+                    petPetBtn.textContent = `Погладить через ${timeLeft}с`;
+                }
+                
+                // Проверяем можно ли купить сытость
+                satietyBtn.disabled = game.diamonds < 500;
                 
                 const buyCarrotBtn = document.getElementById('buyCarrotBtn');
                 buyCarrotBtn.disabled = game.diamonds < 10;
@@ -1876,19 +2247,57 @@
                     clearTimeout(game.pet.hungerTimer);
                 }
                 
-                // Рандомное время голода от 2 до 5 минут
-                const hungerTime = Math.floor(Math.random() * (5 - 2 + 1) + 2) * 60 * 1000;
+                // Рандомное время голода от 5 до 10 минут
+                const hungerTime = Math.floor(Math.random() * (10 - 5 + 1) + 5) * 60 * 1000;
                 
                 game.pet.hungerTimer = setTimeout(() => {
-                    game.pet.isHungry = true;
-                    updatePetUI();
-                    
-                    // Показываем уведомление
-                    showPetNotification('🐰 Ваш зайка проголодался! Скорее покорми его!');
-                    
-                    // Сохраняем игру
-                    saveGame();
+                    // Проверяем что сытость не активна
+                    if (Date.now() > game.pet.satietyUntil) {
+                        game.pet.isHungry = true;
+                        game.gamePaused = true; // Пауза игры когда питомец голоден
+                        updatePetUI();
+                        
+                        // Показываем уведомление на 5 секунд
+                        showPetNotification('🐰 Ваш зайка проголодался! Скорее покорми его!');
+                        hungerNotificationShown = true;
+                        
+                        setTimeout(() => {
+                            hungerNotificationShown = false;
+                        }, 5000);
+                        
+                        // Сохраняем игру
+                        saveGame();
+                    }
                 }, hungerTime);
+            }
+            
+            // ========== ФУНКЦИИ ДЛЯ VIP БУСТОВ ==========
+            function renderVIPBoosts() {
+                const vipContent = document.getElementById('vipContent');
+                vipContent.innerHTML = '';
+                
+                vipBoosts.forEach(boost => {
+                    const canAfford = game.diamonds >= boost.cost;
+                    const isActive = game.activeBoost && game.boostEndTime > Date.now();
+                    const vipItem = document.createElement('div');
+                    vipItem.className = 'vip-item';
+                    
+                    vipItem.innerHTML = `
+                        <div class="vip-item-header">
+                            <div class="vip-item-name">${boost.name}</div>
+                            <div class="vip-item-cost">${boost.cost} 💎</div>
+                        </div>
+                        <div style="color: #ffccd5; font-size: 0.85rem; margin: 5px 0;">
+                            ${boost.description}<br>
+                            Длительность: ${boost.duration} секунд
+                        </div>
+                        <button class="vip-btn" onclick="buyVIPBoost(${boost.id})" ${canAfford && !isActive ? '' : 'disabled'}>
+                            ${isActive ? 'Буст активен' : (canAfford ? 'Активировать' : 'Недостаточно алмазов')}
+                        </button>
+                    `;
+                    
+                    vipContent.appendChild(vipItem);
+                });
             }
             
             // ========== УВЕДОМЛЕНИЯ ==========
@@ -1944,7 +2353,7 @@
                     if (notification.parentNode) {
                         notification.remove();
                     }
-                }, 6000);
+                }, 5000); // 5 секунд как просили
             }
             
             // ========== ОСНОВНАЯ ИГРА ==========
@@ -1958,6 +2367,7 @@
             // Элементы меню
             const totalCoinsEl = document.getElementById('totalCoins');
             const totalDiamondsEl = document.getElementById('totalDiamonds');
+            const diamondsFromPetEl = document.getElementById('diamondsFromPet');
             const totalHeartsEl = document.getElementById('totalHearts');
             const playTimeEl = document.getElementById('playTime');
             const rebirthCountEl = document.getElementById('rebirthCount');
@@ -1970,9 +2380,7 @@
                 loadGame();
                 
                 // Инициализируем улучшения если их еще нет
-                if (game.upgrades.length === 0) {
-                    initUpgrades();
-                }
+                initUpgrades();
                 
                 // Устанавливаем настройки
                 document.getElementById('musicToggle').checked = game.musicEnabled;
@@ -1987,28 +2395,39 @@
                 // Обновляем отображение
                 updateDisplay();
                 updateRebirthUI();
+                checkGalleryUnlocks();
                 
-                // Запускаем таймер голода для питомца
-                if (!game.pet.nextHungerTime || Date.now() > game.pet.nextHungerTime) {
+                // Запускаем таймер голода для питомца если нужно
+                if (!game.pet.satietyUntil || Date.now() > game.pet.satietyUntil) {
                     startPetHungerTimer();
                 }
                 
                 // Начинаем игровой цикл
                 setInterval(gameLoop, 100);
                 
+                // Таймер для обновления VIP бустов
+                setInterval(() => {
+                    if (game.activeBoost && Date.now() > game.boostEndTime) {
+                        game.activeBoost = null;
+                        showNotification('⚡ Буст закончился!');
+                    }
+                }, 1000);
+                
                 // Таймер игрового времени и уведомлений
                 setInterval(() => {
-                    game.playTime++;
-                    
-                    // Уведомление каждые 5 минут
-                    if (game.playTime % 300 === 0) {
-                        showLoveNotification();
-                    }
-                    
-                    // Проверка достижений каждые 5000 монет
-                    if (game.totalCoins >= lastAchievementCheck + 5000) {
-                        lastAchievementCheck = game.totalCoins - (game.totalCoins % 5000);
-                        showAchievementNotification();
+                    if (!game.gamePaused) { // Только если игра не на паузе
+                        game.playTime++;
+                        
+                        // Уведомление каждые 5 минут
+                        if (game.playTime % 300 === 0) {
+                            showLoveNotification();
+                        }
+                        
+                        // Проверка достижений каждые 5000 монет
+                        if (game.totalCoins >= lastAchievementCheck + 5000) {
+                            lastAchievementCheck = game.totalCoins - (game.totalCoins % 5000);
+                            showAchievementNotification();
+                        }
                     }
                     
                     if (game.playTime % 60 === 0) {
@@ -2027,7 +2446,13 @@
             }
             
             function handleHeartClick() {
-                const clickPower = game.clickPower * game.rebirthMultiplier;
+                let clickPower = game.clickPower * game.rebirthMultiplier;
+                
+                // Если активен VIP буст, добавляем бонус
+                if (game.activeBoost && game.boostEndTime > Date.now()) {
+                    clickPower += game.activeBoost.clickBonus;
+                }
+                
                 game.hearts += clickPower;
                 game.totalHearts += clickPower;
                 
@@ -2061,6 +2486,14 @@
             }
             
             function gameLoop() {
+                // Если питомец голоден и сытость не активна - пауза игры
+                if (game.pet.isHungry && Date.now() > game.pet.satietyUntil) {
+                    game.gamePaused = true;
+                    return; // Не начисляем пассивный доход
+                } else {
+                    game.gamePaused = false;
+                }
+                
                 // Пассивный доход от улучшений
                 if (game.heartsPerSecond > 0) {
                     const passiveHearts = (game.heartsPerSecond * game.rebirthMultiplier) / 10;
@@ -2092,12 +2525,12 @@
                     if (diamondsEarned > 0) {
                         game.diamonds += diamondsEarned;
                         game.totalDiamonds += diamondsEarned;
-                        showNotification(`💎 +${diamondsEarned} алмазов за достижение!`);
                         
                         // Проверяем открытие животных в галерее
                         checkGalleryUnlocks();
                         
                         updateDiamondsDisplay();
+                        updateMenuStats();
                     }
                 }
             }
@@ -2106,7 +2539,13 @@
                 coinsEl.textContent = formatNumber(game.coins);
                 heartsEl.textContent = game.hearts.toFixed(1);
                 heartsPerSecondEl.textContent = (game.heartsPerSecond * game.rebirthMultiplier).toFixed(1);
-                clickPowerEl.textContent = (game.clickPower * game.rebirthMultiplier).toFixed(1);
+                
+                let clickPower = game.clickPower * game.rebirthMultiplier;
+                if (game.activeBoost && game.boostEndTime > Date.now()) {
+                    clickPower += game.activeBoost.clickBonus;
+                }
+                
+                clickPowerEl.textContent = clickPower.toFixed(1);
                 diamondsCounter.textContent = formatNumber(game.diamonds);
             }
             
@@ -2127,6 +2566,7 @@
                 
                 totalCoinsEl.textContent = formatNumber(game.totalCoins);
                 totalDiamondsEl.textContent = formatNumber(game.totalDiamonds);
+                diamondsFromPetEl.textContent = formatNumber(game.diamondsFromPet);
                 totalHeartsEl.textContent = formatNumber(game.totalHearts);
                 playTimeEl.textContent = timeText;
             }
@@ -2155,9 +2595,15 @@
                 if (!upgrade || game.coins < upgrade.cost) return;
                 
                 game.coins -= upgrade.cost;
-                game.heartsPerSecond += upgrade.heartsPerSecond;
-                upgrade.count++;
-                upgrade.cost = Math.floor(upgrade.baseCost * Math.pow(1.4, upgrade.count));
+                
+                if (upgrade.effect === "clickPower") {
+                    game.clickPower += 1;
+                    upgrade.cost = Math.floor(upgrade.cost * 1.4);
+                } else if (upgrade.effect === "heartsPerSecond") {
+                    game.heartsPerSecond += upgrade.effectValue;
+                    upgrade.count++;
+                    upgrade.cost = Math.floor(upgrade.baseCost * Math.pow(1.4, upgrade.count));
+                }
                 
                 updateDisplay();
                 renderShopUpgrades();
@@ -2165,16 +2611,17 @@
                 saveGame();
             };
             
-            window.buyClickPower = function() {
-                const cost = game.clickPower * 50 * game.rebirthMultiplier;
-                if (game.coins < cost) return;
+            window.buyCoinsForDiamonds = function() {
+                if (game.diamonds < 5) return;
                 
-                game.coins -= cost;
-                game.clickPower += 1;
+                game.diamonds -= 5;
+                game.coins += 100;
+                game.totalCoins += 100;
                 
                 updateDisplay();
+                updateDiamondsDisplay();
                 renderShopUpgrades();
-                showNotification(`💪 Сила клика увеличена!`);
+                showNotification(`💰 Получено 100 монет за 5 алмазов!`);
                 saveGame();
             };
             
@@ -2196,6 +2643,7 @@
                 const savedRebirthMultiplier = game.rebirthMultiplier;
                 const savedNextRebirthCost = game.nextRebirthCost;
                 const savedPet = { ...game.pet };
+                const savedUnlockedAnimals = game.unlockedAnimals;
                 
                 // Полный сброс
                 game.coins = 0;
@@ -2211,6 +2659,7 @@
                 game.rebirthMultiplier = savedRebirthMultiplier;
                 game.nextRebirthCost = savedNextRebirthCost;
                 game.pet = savedPet;
+                game.unlockedAnimals = savedUnlockedAnimals;
                 
                 // Сбрасываем улучшения
                 initUpgrades();
@@ -2246,6 +2695,7 @@
                 game.pet.carrots--;
                 game.pet.fedCount++;
                 game.pet.isHungry = false;
+                game.gamePaused = false; // Снимаем паузу игры
                 
                 // Запускаем новый таймер голода
                 startPetHungerTimer();
@@ -2256,23 +2706,75 @@
             };
             
             window.petPet = function() {
+                const now = Date.now();
+                const twoMinutes = 2 * 60 * 1000;
+                
+                // Проверяем, прошло ли 2 минуты с последнего поглаживания
+                if (game.pet.lastPetTime && (now - game.pet.lastPetTime) < twoMinutes) {
+                    const timeLeft = Math.ceil((twoMinutes - (now - game.pet.lastPetTime)) / 1000);
+                    showNotification(`⏰ Можно погладить зайку через ${timeLeft} секунд`);
+                    return;
+                }
+                
                 // Рандомные алмазы от 10 до 50
                 const diamonds = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
                 
                 game.diamonds += diamonds;
+                game.totalDiamonds += diamonds;
+                game.diamondsFromPet += diamonds;
                 game.pet.petDiamonds += diamonds;
                 game.pet.pettedCount++;
+                game.pet.lastPetTime = now;
                 
                 updateDiamondsDisplay();
                 updatePetUI();
+                updateMenuStats();
                 showPetNotification(`✨ Спасибо что меня любишь! На тебе ${diamonds} алмазов! 💎`);
+                saveGame();
+                
+                // Проверяем галерею после получения алмазов
+                checkGalleryUnlocks();
+            };
+            
+            window.buySatiety = function() {
+                if (game.diamonds < 500) return;
+                
+                game.diamonds -= 500;
+                game.pet.satietyUntil = Date.now() + (30 * 60 * 1000); // 30 минут
+                game.pet.isHungry = false;
+                game.gamePaused = false; // Снимаем паузу игры
+                
+                updateDiamondsDisplay();
+                updatePetUI();
+                showNotification(`🕒 Зайка не будет голоден 30 минут!`);
+                saveGame();
+            };
+            
+            window.buyVIPBoost = function(id) {
+                const boost = vipBoosts.find(b => b.id === id);
+                if (!boost || game.diamonds < boost.cost) return;
+                
+                // Проверяем что нет активного буста
+                if (game.activeBoost && game.boostEndTime > Date.now()) {
+                    showNotification('⚡ Уже есть активный буст!');
+                    return;
+                }
+                
+                game.diamonds -= boost.cost;
+                game.activeBoost = boost;
+                game.boostEndTime = Date.now() + (boost.duration * 1000);
+                
+                updateDiamondsDisplay();
+                renderVIPBoosts();
+                updateDisplay();
+                showNotification(`⚡ Буст активирован! +${boost.clickBonus} монет за клик на ${boost.duration} секунд!`);
                 saveGame();
             };
             
             // ========== СОХРАНЕНИЕ И ЗАГРУЗКА ==========
             function saveGame() {
                 try {
-                    localStorage.setItem('loveClicker_ultimate', JSON.stringify(game));
+                    localStorage.setItem('loveClicker_full_fixed', JSON.stringify(game));
                 } catch (e) {
                     console.log('Ошибка сохранения:', e);
                 }
@@ -2280,7 +2782,7 @@
             
             function loadGame() {
                 try {
-                    const saved = localStorage.getItem('loveClicker_ultimate');
+                    const saved = localStorage.getItem('loveClicker_full_fixed');
                     if (saved) {
                         const savedGame = JSON.parse(saved);
                         game = { ...game, ...savedGame };
@@ -2294,9 +2796,18 @@
                                 petDiamonds: 0,
                                 isHungry: false,
                                 nextHungerTime: 0,
+                                lastPetTime: 0,
+                                satietyUntil: 0,
                                 hungerTimer: null
                             };
                         }
+                        
+                        // Инициализируем diamondsFromPet если нет
+                        if (!game.diamondsFromPet) {
+                            game.diamondsFromPet = game.pet.petDiamonds || 0;
+                        }
+                        
+                        console.log('Игра загружена:', game);
                     }
                 } catch (e) {
                     console.log('Ошибка загрузки:', e);
