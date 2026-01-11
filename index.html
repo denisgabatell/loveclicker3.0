@@ -1960,6 +1960,26 @@
             cursor: pointer;
         }
         
+        /* ДОБАВЛЕНО: Стиль для офлайн-уведомления */
+        .offline-notification {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, rgba(72, 202, 228, 0.95), rgba(0, 255, 157, 0.95));
+            color: #0f0f1a;
+            padding: 15px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            z-index: 10000;
+            text-align: center;
+            max-width: 90%;
+            box-shadow: 0 10px 30px rgba(72, 202, 228, 0.4);
+            border: 3px solid rgba(0, 255, 157, 0.6);
+            animation: achievementNotification 10s ease-in-out forwards;
+            backdrop-filter: blur(10px);
+        }
+        
         @keyframes loveNotification {
             0%, 90% { 
                 opacity: 0;
@@ -2433,6 +2453,26 @@
                 </label>
             </div>
         </div>
+        
+        <!-- ДОБАВЛЕНО: Секция офлайн-дохода -->
+        <div class="menu-section">
+            <div style="color: #48cae4; font-weight: bold; margin-bottom: 10px; text-align: center;">
+                ⏱️ Офлайн-доход
+            </div>
+            <div class="menu-item">
+                <span>⏰ Максимум:</span>
+                <span>2 часа</span>
+            </div>
+            <div class="menu-item">
+                <span>💰 В час:</span>
+                <span id="hourlyRate">0 🪙</span>
+            </div>
+            <div class="menu-item">
+                <span>💖 В час:</span>
+                <span id="hourlyHearts">0 💖</span>
+            </div>
+        </div>
+        
         <div class="menu-section">
             <div class="menu-item">
                 <span>🪙 Всего монет:</span>
@@ -2473,7 +2513,7 @@
             </div>
             <div class="menu-item">
                 <span>📊 Улучшений до 15:</span>
-                <span id="upgradesTo15">0/8</span>
+                <span id="upgradesTo15">0/7</span> <!-- ИЗМЕНЕНО: с 0/8 на 0/7 -->
             </div>
             <button class="rebirth-button" id="rebirthButton" onclick="performRebirth()" disabled>
                 🔄 Начать перерождение
@@ -2495,6 +2535,9 @@
     
     <!-- УВЕДОМЛЕНИЯ -->
     <div class="notification" id="notification"></div>
+    
+    <!-- ДОБАВЛЕНО: Офлайн-уведомление -->
+    <div class="offline-notification" id="offlineNotification" style="display: none;"></div>
     
     <!-- КНОПКА КОПИЛКИ -->
     <div class="piggybank-button" id="piggybankButton">
@@ -2594,6 +2637,11 @@
             darkTheme: true,
             vibration: true,
             gamePaused: false,
+            
+            // ДОБАВЛЕНО: Поля для офлайн-дохода
+            lastPlayTime: Date.now(), // Время последнего закрытия игры
+            offlineEarnings: 0, // Накопленные офлайн-доходы
+            maxOfflineTime: 2 * 60 * 60 * 1000, // Максимальное время офлайн (2 часа)
             
             // НОВОЕ: Поцелуйчики
             kisses: 0,
@@ -3926,6 +3974,11 @@
                 loadGame();
                 initUpgrades();
                 
+                // ДОБАВЛЕНО: Проверка офлайн-дохода при запуске
+                calculateOfflineEarnings();
+                showOfflineEarningsNotification();
+                game.lastPlayTime = Date.now();
+                
                 document.getElementById('musicToggle').checked = game.musicEnabled;
                 document.getElementById('themeToggle').checked = game.darkTheme;
                 document.getElementById('vibrationToggle').checked = game.vibration;
@@ -4099,6 +4152,11 @@
                         updateDisplay();
                     }
                 }
+                
+                // ДОБАВЛЕНО: Обновляем почасовую ставку каждые 5 секунд
+                if (Math.floor(Date.now() / 1000) % 5 === 0) {
+                    updateHourlyRate();
+                }
             }
             
             function checkAchievements() {
@@ -4157,17 +4215,21 @@
                 rebirthMultiplierEl.textContent = `x${game.rebirthMultiplier.toFixed(1)}`;
                 rebirthCostEl.textContent = formatNumber(game.nextRebirthCost);
                 
+                // ИСПРАВЛЕНО: Теперь считаем только 7 улучшений (без первой карточки)
                 let upgradesAt15 = 0;
                 game.upgrades.forEach(upgrade => {
+                    // Пропускаем первую карточку (усиление клика)
+                    if (upgrade.effect === "clickPower") return;
+                    
                     if (upgrade.count >= 15) {
                         upgradesAt15++;
                     }
                 });
                 
-                upgradesTo15El.textContent = `${upgradesAt15}/${game.upgrades.length}`;
+                upgradesTo15El.textContent = `${upgradesAt15}/7`; // ИЗМЕНЕНО: с 8 на 7
                 
                 // ИСПРАВЛЕНО: Перерождение покупается за монеты с текущего баланса
-                const canRebirth = game.coins >= game.nextRebirthCost && upgradesAt15 >= game.upgrades.length;
+                const canRebirth = game.coins >= game.nextRebirthCost && upgradesAt15 >= 7; // ИЗМЕНЕНО: с 8 на 7
                 rebirthButton.disabled = !canRebirth;
             }
             
@@ -4358,17 +4420,24 @@
             
             window.performRebirth = function() {
                 // ИСПРАВЛЕНО: Перерождение покупается за монеты с текущего баланса
-                if (game.coins < game.nextRebirthCost) return;
+                if (game.coins < game.nextRebirthCost) {
+                    showNotification(`❌ Нужно ${formatNumber(game.nextRebirthCost)} монет для перерождения!`);
+                    return;
+                }
                 
+                // ИСПРАВЛЕНО: Теперь считаем только 7 улучшений (без первой карточки)
                 let upgradesAt15 = 0;
                 game.upgrades.forEach(upgrade => {
+                    // Пропускаем первую карточку (усиление клика)
+                    if (upgrade.effect === "clickPower") return;
+                    
                     if (upgrade.count >= 15) {
                         upgradesAt15++;
                     }
                 });
                 
-                if (upgradesAt15 < game.upgrades.length) {
-                    showNotification('❌ Для перерождения нужно чтобы все улучшения были 15 уровня!');
+                if (upgradesAt15 < 7) { // ИЗМЕНЕНО: с 8 на 7
+                    showNotification(`❌ Для перерождения нужно чтобы 7 улучшений (без усиления клика) были 15 уровня! Сейчас: ${upgradesAt15}/7`);
                     return;
                 }
                 
@@ -4387,6 +4456,7 @@
                 const savedGalleryDiamonds = game.galleryDiamonds;
                 const savedGalleryDiamondsPerMinute = game.galleryDiamondsPerMinute;
                 const savedTimesLevel10 = game.timesLevel10;
+                const savedExclusiveX = [...game.exclusiveX];
                 
                 // Сбрасываем то, что должно сброситься
                 game.coins = 0;
@@ -4402,6 +4472,17 @@
                 game.activeBoost = null;
                 game.boostEndTime = 0;
                 
+                // ИСПРАВЛЕНО: Сбрасываем улучшения
+                game.upgrades.forEach(upgrade => {
+                    upgrade.count = 0;
+                    upgrade.cost = upgrade.baseCost;
+                });
+                
+                // Сбрасываем улучшения для отображения
+                game.clickPower = 1;
+                game.heartsPerSecond = 0;
+                game.coinsPerSecond = 0;
+                
                 // Восстанавливаем сохраненное
                 game.pet = savedPet;
                 game.unlockedAnimals = savedUnlockedAnimals;
@@ -4413,9 +4494,7 @@
                 game.galleryDiamonds = savedGalleryDiamonds;
                 game.galleryDiamondsPerMinute = savedGalleryDiamondsPerMinute;
                 game.timesLevel10 = savedTimesLevel10;
-                
-                // Сбрасываем улучшения
-                initUpgrades();
+                game.exclusiveX = savedExclusiveX; // Восстанавливаем купленные иксы
                 
                 updateDisplay();
                 updateRebirthUI();
@@ -4655,6 +4734,8 @@
             function saveGame() {
                 try {
                     game.version = '1.1.5';
+                    // ДОБАВЛЕНО: Обновляем время при сохранении
+                    game.lastPlayTime = Date.now();
                     localStorage.setItem('loveClicker_v1_1_5', JSON.stringify(game));
                 } catch (e) {
                     console.log('Ошибка сохранения:', e);
@@ -4716,6 +4797,17 @@
                             game.coinsPerSecond = 0;
                         }
                         
+                        // ДОБАВЛЕНО: Инициализация полей офлайн-дохода
+                        if (game.lastPlayTime === undefined) {
+                            game.lastPlayTime = Date.now();
+                        }
+                        if (game.offlineEarnings === undefined) {
+                            game.offlineEarnings = 0;
+                        }
+                        if (game.maxOfflineTime === undefined) {
+                            game.maxOfflineTime = 2 * 60 * 60 * 1000;
+                        }
+                        
                         if (!game.pet) {
                             game.pet = {
                                 name: "Зайка",
@@ -4745,6 +4837,152 @@
                     console.log('Ошибка загрузки:', e);
                 }
             }
+            
+            // ========== ФУНКЦИИ ОФЛАЙН-ДОХОДА ==========
+            
+            // Функция расчета офлайн-дохода
+            function calculateOfflineEarnings() {
+                const now = Date.now();
+                const timePassed = now - game.lastPlayTime;
+                
+                // Ограничиваем время офлайн 2 часами (7200000 мс)
+                const offlineTime = Math.min(timePassed, game.maxOfflineTime);
+                
+                if (offlineTime < 10000) { // Если вышли менее 10 секунд назад - игнорируем
+                    game.offlineEarnings = 0;
+                    return;
+                }
+                
+                // Рассчитываем доход в секунду
+                const coinsPerSecond = (game.coinsPerSecond * game.rebirthMultiplier) / 10;
+                const heartsPerSecond = (game.heartsPerSecond * game.rebirthMultiplier) / 10;
+                
+                // Рассчитываем общее количество секунд офлайн
+                const secondsOffline = offlineTime / 1000;
+                
+                // Рассчитываем заработок
+                let offlineCoins = coinsPerSecond * secondsOffline;
+                let offlineHearts = heartsPerSecond * secondsOffline;
+                
+                // Прибавляем алмазы от галереи за время офлайн
+                const galleryDiamondsPerSecond = game.galleryDiamondsPerMinute / 60;
+                let offlineDiamonds = galleryDiamondsPerSecond * secondsOffline;
+                
+                // Сохраняем для показа пользователю
+                game.offlineEarnings = {
+                    coins: offlineCoins,
+                    hearts: offlineHearts,
+                    diamonds: offlineDiamonds,
+                    timeOffline: secondsOffline
+                };
+            }
+            
+            // Функция отображения уведомления офлайн-дохода
+            function showOfflineEarningsNotification() {
+                if (!game.offlineEarnings || game.offlineEarnings.timeOffline < 10) return;
+                
+                const earnings = game.offlineEarnings;
+                const hours = Math.floor(earnings.timeOffline / 3600);
+                const minutes = Math.floor((earnings.timeOffline % 3600) / 60);
+                const seconds = Math.floor(earnings.timeOffline % 60);
+                
+                // Создаем уведомление
+                const notification = document.getElementById('offlineNotification');
+                notification.innerHTML = `
+                    <div style="font-size: 1.1rem; margin-bottom: 8px;">💰 Офлайн-доход</div>
+                    <div style="font-size: 0.9rem; margin-bottom: 10px; color: #0a0a0f;">
+                        За ${hours > 0 ? hours + 'ч ' : ''}${minutes}м ${seconds}с
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="color: #ffd700; font-size: 1.3rem;">${formatNumber(earnings.coins)}</div>
+                            <div style="font-size: 0.8rem; color: #0a0a0f;">🪙 Монеты</div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="color: #ff6b8b; font-size: 1.3rem;">${formatNumber(earnings.hearts)}</div>
+                            <div style="font-size: 0.8rem; color: #0a0a0f;">💖 Сердечки</div>
+                        </div>
+                        ${earnings.diamonds > 0 ? 
+                            `<div style="display: flex; flex-direction: column; align-items: center;">
+                                <div style="color: #b9f2ff; font-size: 1.3rem;">${formatNumber(earnings.diamonds)}</div>
+                                <div style="font-size: 0.8rem; color: #0a0a0f;">💎 Алмазы</div>
+                            </div>` 
+                            : ''}
+                    </div>
+                `;
+                
+                notification.style.display = 'block';
+                notification.style.animation = 'achievementNotification 10s ease-in-out forwards';
+                
+                // Начисляем доходы
+                game.coins += earnings.coins;
+                game.totalCoins += earnings.coins;
+                game.hearts += earnings.hearts;
+                game.totalHearts += earnings.hearts;
+                
+                if (earnings.diamonds > 0) {
+                    game.diamonds += earnings.diamonds;
+                    game.totalDiamonds += earnings.diamonds;
+                    game.galleryDiamonds -= earnings.diamonds;
+                    if (game.galleryDiamonds < 0) game.galleryDiamonds = 0;
+                }
+                
+                // Обновляем отображение
+                updateDisplay();
+                updateDiamondsDisplay();
+                updateGalleryDiamondsDisplay();
+                updateMenuStats();
+                
+                // Сбрасываем офлайн-доходы
+                game.offlineEarnings = 0;
+                
+                // Скрываем уведомление через 10 секунд
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 10000);
+                
+                showNotification('💰 Получен офлайн-доход!');
+            }
+            
+            // Функция для обновления почасовой ставки
+            function updateHourlyRate() {
+                const hourlyCoins = (game.coinsPerSecond * 3600 * game.rebirthMultiplier) / 10;
+                const hourlyHearts = (game.heartsPerSecond * 3600 * game.rebirthMultiplier) / 10;
+                
+                const hourlyRateEl = document.getElementById('hourlyRate');
+                const hourlyHeartsEl = document.getElementById('hourlyHearts');
+                
+                if (hourlyRateEl) {
+                    hourlyRateEl.textContent = formatNumber(hourlyCoins) + ' 🪙';
+                }
+                
+                if (hourlyHeartsEl) {
+                    hourlyHeartsEl.textContent = formatNumber(hourlyHearts) + ' 💖';
+                }
+            }
+            
+            // ========== ОБРАБОТЧИКИ ДЛЯ ОФЛАЙН-ДОХОДА ==========
+            
+            // Обработчик перед закрытием страницы
+            window.addEventListener('beforeunload', function() {
+                game.lastPlayTime = Date.now();
+                saveGame();
+            });
+            
+            // Обработчик при смене активности вкладки
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    // Когда пользователь уходит со страницы
+                    game.lastPlayTime = Date.now();
+                    saveGame();
+                } else {
+                    // Когда пользователь возвращается
+                    calculateOfflineEarnings();
+                    showOfflineEarningsNotification();
+                    game.lastPlayTime = Date.now();
+                }
+            });
+            
         });
     </script>
 </body>
