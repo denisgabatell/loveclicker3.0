@@ -614,7 +614,7 @@
         }
         
         /* КНОПКИ МАГАЗИНА И ГАЛЕРЕИ */
-        .shop-button, .gallery-button, .pet-button {
+        .shop-button, .gallery-button, .pet-button, .quests-button, .minigame-button {
             position: fixed;
             bottom: 30px;
             width: 50px;
@@ -647,6 +647,24 @@
             left: 80px;
             background: linear-gradient(45deg, #00ff9d, #48cae4);
             box-shadow: 0 8px 25px rgba(0, 255, 157, 0.3);
+        }
+        
+        /* НОВАЯ КНОПКА ЗАДАНИЙ */
+        .quests-button {
+            left: 145px;
+            background: linear-gradient(45deg, #ff3366, #ff6b8b);
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.3);
+        }
+        
+        .quests-button.active {
+            animation: pulse 1s infinite;
+        }
+        
+        /* НОВАЯ КНОПКА МИНИ-ИГР */
+        .minigame-button {
+            right: 80px;
+            background: linear-gradient(45deg, #48cae4, #00ff9d);
+            box-shadow: 0 8px 25px rgba(72, 202, 228, 0.3);
         }
         
         /* ОКНО ОБМЕНА */
@@ -807,17 +825,19 @@
         
         .shop-window {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 70%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 400px;
             background: linear-gradient(135deg, #0f0f1a 0%, #1a1b2e 100%);
             z-index: 1003;
             padding: 20px;
-            border-radius: 20px 20px 0 0;
+            border-radius: 20px;
             border-top: 3px solid #ff6b8b;
             display: none;
             overflow-y: auto;
+            max-height: 80vh;
         }
         
         .shop-header {
@@ -1556,111 +1576,114 @@
         }
         
         /* ОКНО МЕНЮ */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1002;
-            display: none;
-        }
-        
-        .menu-window {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 80%;
-            max-width: 300px;
-            height: 100%;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1b2e 100%);
-            z-index: 1003;
-            padding: 60px 20px 20px;
-            border-left: 2px solid #c77dff;
-            display: none;
-            overflow-y: auto;
-        }
-        
-        .menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(199, 125, 255, 0.3);
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-        }
-        
-        .menu-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #c77dff;
-        }
-        
-        .close-menu {
-            background: #c77dff;
-            color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            font-size: 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .menu-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-        
-        .rebirth-section {
-            background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(255, 0, 128, 0.1));
-            border: 1px solid rgba(255, 0, 255, 0.3);
-        }
-        
-        .rebirth-button {
-            background: linear-gradient(45deg, #ff00ff, #ff0080);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .rebirth-button:hover:not(:disabled) {
-            transform: translateY(-2px);
-        }
-        
-        .rebirth-button:disabled {
-            background: #444;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
+/* ОКНО МЕНЮ - ИСПРАВЛЕНО: Возвращаем на место справа */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1002;
+    display: none;
+}
+
+.menu-window {
+    position: fixed;
+    top: 0;
+    right: 0; /* Возвращаем справа */
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1b2e 100%);
+    z-index: 1003;
+    padding: 60px 20px 20px;
+    border-left: 2px solid #c77dff;
+    display: none;
+    overflow-y: auto;
+    /* Убираем border-radius и transform из центра */
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(199, 125, 255, 0.3);
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+}
+
+.menu-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #c77dff;
+}
+
+.close-menu {
+    background: #c77dff;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.rebirth-section {
+    background: linear-gradient(135deg, rgba(255, 0, 255, 0.1), rgba(255, 0, 128, 0.1));
+    border: 1px solid rgba(255, 0, 255, 0.3);
+}
+
+.rebirth-button {
+    background: linear-gradient(45deg, #ff00ff, #ff0080);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.rebirth-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.rebirth-button:disabled {
+    background: #444;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
         
         /* ОКНО VIP МАГАЗИНА */
         .vip-overlay {
@@ -1964,6 +1987,499 @@
             backdrop-filter: blur(10px);
         }
         
+        /* НОВЫЕ СТИЛИ ДЛЯ ДОПОЛНИТЕЛЬНЫХ ФУНКЦИЙ */
+        
+        /* ОКНО ЗАДАНИЙ */
+        .quests-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            display: none;
+        }
+        
+        .quests-window {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1b2e 100%);
+            z-index: 1003;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid #ff6b8b;
+            display: none;
+            overflow-y: auto;
+        }
+        
+        .quests-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 107, 139, 0.3);
+        }
+        
+        .quests-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff6b8b;
+        }
+        
+        .close-quests {
+            background: #ff6b8b;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quest-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 107, 139, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .quest-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffccd5;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .quest-tab.active {
+            background: linear-gradient(45deg, #ff6b8b, #c77dff);
+            color: white;
+            font-weight: 700;
+        }
+        
+        .quest-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .quest-item.completed {
+            border: 2px solid #00ff9d;
+            background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(72, 202, 228, 0.05));
+        }
+        
+        .quest-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .quest-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffccd5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quest-reward {
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 170, 0, 0.2));
+            color: #ffd700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .quest-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .quest-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b8b, #c77dff);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        
+        .quest-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #ffccd5;
+            margin-bottom: 10px;
+        }
+        
+        .quest-claim-btn {
+            background: linear-gradient(45deg, #ff6b8b, #c77dff);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+        
+        .quest-claim-btn:disabled {
+            background: #444;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .quest-notification {
+            position: fixed;
+            top: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, rgba(255, 107, 139, 0.9), rgba(199, 125, 255, 0.9));
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            z-index: 9999;
+            opacity: 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            max-width: 90%;
+            animation: achievementNotification 6s ease-in-out forwards;
+            cursor: pointer;
+        }
+        
+        /* ОКНО МАГАЗИНА МОДЫ */
+        .fashion-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            display: none;
+        }
+        
+        .fashion-window {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1b2e 100%);
+            z-index: 1003;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid #ff9ff3;
+            display: none;
+            overflow-y: auto;
+        }
+        
+        .fashion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 159, 243, 0.3);
+        }
+        
+        .fashion-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ff9ff3;
+        }
+        
+        .close-fashion {
+            background: #ff9ff3;
+            color: #000;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fashion-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 159, 243, 0.3);
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .fashion-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #ffccd5;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .fashion-tab.active {
+            background: linear-gradient(45deg, #ff9ff3, #ff6b8b);
+            color: white;
+            font-weight: 700;
+        }
+        
+        .fashion-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .fashion-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .fashion-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .fashion-item.owned {
+            border-color: #00ff9d;
+            background: linear-gradient(135deg, rgba(0, 255, 157, 0.15), rgba(72, 202, 228, 0.15));
+        }
+        
+        .fashion-item.equipped {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 170, 0, 0.15));
+        }
+        
+        .fashion-emoji {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        
+        .fashion-name {
+            font-size: 0.7rem;
+            color: #ffccd5;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .fashion-price {
+            font-size: 0.7rem;
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .fashion-price.free {
+            color: #00ff9d;
+        }
+        
+        /* ОКНО МИНИ-ИГРЫ */
+        .minigame-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10004;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .minigame-window {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1b2e 100%);
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid #48cae4;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .minigame-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(72, 202, 228, 0.3);
+        }
+        
+        .minigame-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #48cae4;
+            margin-bottom: 15px;
+        }
+        
+        .close-minigame {
+            background: #48cae4;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .minigame-canvas {
+            width: 100%;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 2px solid rgba(72, 202, 228, 0.3);
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .minigame-heart {
+            position: absolute;
+            font-size: 30px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s;
+            z-index: 1;
+        }
+        
+        .minigame-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #ffccd5;
+            font-size: 1.1rem;
+        }
+        
+        .minigame-timer {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .minigame-score {
+            color: #ff6b8b;
+            font-weight: bold;
+        }
+        
+        .minigame-start-btn {
+            background: linear-gradient(45deg, #48cae4, #00ff9d);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .minigame-start-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* НОВЫЕ СТИЛИ ДЛЯ ОБМЕННИКА С ВВОДОМ */
+        .exchange-input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .exchange-input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .exchange-input {
+            flex: 1;
+            background: rgba(185, 242, 255, 0.1);
+            border: 2px solid rgba(185, 242, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            padding: 10px 15px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .exchange-input:focus {
+            outline: none;
+            border-color: #b9f2ff;
+            box-shadow: 0 0 10px rgba(185, 242, 255, 0.5);
+        }
+        
+        .exchange-currency {
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .exchange-arrow {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            color: #b9f2ff;
+        }
+        
+        .exchange-result {
+            background: linear-gradient(45deg, rgba(185, 242, 255, 0.2), rgba(72, 202, 228, 0.1));
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            border: 1px solid rgba(185, 242, 255, 0.3);
+        }
+        
+        .exchange-result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #b9f2ff;
+            margin: 5px 0;
+        }
+        
         @keyframes loveNotification {
             0%, 90% { 
                 opacity: 0;
@@ -2009,6 +2525,14 @@
                 left: 70px;
             }
             
+            .quests-button {
+                left: 125px;
+            }
+            
+            .minigame-button {
+                right: 70px;
+            }
+            
             .unlocked-emoji {
                 font-size: 80px;
             }
@@ -2027,6 +2551,23 @@
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
+            }
+            
+            .fashion-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .minigame-canvas {
+                height: 250px;
+            }
+            
+            .exchange-input-row {
+                flex-direction: column;
+            }
+            
+            .exchange-arrow {
+                transform: rotate(90deg);
+                margin: 5px 0;
             }
         }
         
@@ -2064,7 +2605,7 @@
                 font-size: 1.1rem;
             }
             
-            .shop-button, .gallery-button, .pet-button {
+            .shop-button, .gallery-button, .pet-button, .quests-button, .minigame-button {
                 width: 45px;
                 height: 45px;
                 font-size: 20px;
@@ -2072,6 +2613,14 @@
             
             .pet-button {
                 left: 65px;
+            }
+            
+            .quests-button {
+                left: 110px;
+            }
+            
+            .minigame-button {
+                right: 65px;
             }
             
             .gallery-grid {
@@ -2095,6 +2644,14 @@
                 width: 35px;
                 height: 35px;
                 font-size: 16px;
+            }
+            
+            .fashion-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .minigame-canvas {
+                height: 200px;
             }
         }
     </style>
@@ -2145,7 +2702,7 @@
                 </div>
             </div>
             
-            <div class="version-text">v1.1.7</div> <!-- ОБНОВЛЕНО: v1.1.6 на v1.1.7 -->
+            <div class="version-text">v1.2.0</div> <!-- ОБНОВЛЕНО: v1.1.7 на v1.2.0 -->
             
             <button class="update-info-button" id="updateInfoButton">
                 📝 Что нового?
@@ -2173,33 +2730,35 @@
     <div class="update-overlay" id="updateOverlay"></div>
     <div class="update-window" id="updateWindow">
         <div class="update-header">
-            <div class="update-title">📝 Что нового в v1.1.7?</div>
+            <div class="update-title">📝 Что нового в v1.2.0?</div>
             <button class="close-update" id="closeUpdate">✕</button>
         </div>
         <div class="update-content">
             <div class="update-section">
-                <div class="update-section-title">✨ Исправления</div>
+                <div class="update-section-title">✨ Новые функции</div>
                 <ul class="update-list">
-                    <li>Исправлена система пассивных алмазов от зверьков - теперь работает корректно</li>
-                    <li>Кнопка "Купить морковку" мгновенно обновляет доступность</li>
-                    <li>Убрана дублирующая кнопка настроек сверху</li>
-                    <li>Сохранена совместимость с предыдущими сохранениями</li>
+                    <li>🎯 Система заданий и достижений</li>
+                    <li>👗 Магазин моды для питомца</li>
+                    <li>🎮 Мини-игра "Ловля сердечек"</li>
+                    <li>🏆 15 новых достижений</li>
+                    <li>💰 Ежедневные и еженедельные награды</li>
                 </ul>
             </div>
             
             <div class="update-section">
                 <div class="update-section-title">🎮 Улучшения</div>
                 <ul class="update-list">
-                    <li>Каждый открытый зверёк теперь правильно даёт +5 алмазов в минуту</li>
-                    <li>Кнопка покупки морковки теперь мгновенно реагирует на изменения баланса алмазов</li>
-                    <li>Интерфейс стал чище - убрана лишняя кнопка</li>
-                    <li>Улучшена система сохранения прогресса</li>
+                    <li>Добавлены 2 новые кнопки: Задания и Мини-игры</li>
+                    <li>Автоматическое отслеживание прогреска заданий</li>
+                    <li>Новые способы траты алмазов на моду</li>
+                    <li>Улучшен интерфейс и адаптивность</li>
+                    <li>Совместимость с предыдущими сохранениями</li>
                 </ul>
             </div>
             
             <div class="update-section">
                 <div style="text-align: center; margin-top: 20px; color: #ff6b8b; font-weight: bold;">
-                    💖 Дианка, улыбайся! 💖
+                    💖 Дианка, улыбайся! Теперь игра еще интереснее! 💖
                 </div>
             </div>
         </div>
@@ -2362,7 +2921,7 @@
             </div>
             <div class="pet-buttons">
                 <button class="pet-btn love" id="giveLoveBtn" onclick="giveLoveToPet()" disabled>
-                    💖 Подарить любовь (<span id="loveCost">20,000</span>💖)
+                    💖 Подарить любовь (<span id="loveCost">10,000</span>💖)
                 </button>
                 <button class="pet-btn pet" id="petPetBtn" onclick="petPet()">
                     ✨ Погладить зайку
@@ -2490,6 +3049,21 @@
         </div>
         
         <div class="menu-section">
+            <div class="menu-item" onclick="openQuestsWindow()">
+                <span>🎯 Задания</span>
+                <span id="completedQuestsCount">0</span>
+            </div>
+            <div class="menu-item" onclick="openFashionWindow()">
+                <span>👗 Мода питомца</span>
+                <span>💎</span>
+            </div>
+            <div class="menu-item" onclick="openMinigameWindow()">
+                <span>🎮 Мини-игры</span>
+                <span>25💎</span>
+            </div>
+        </div>
+        
+        <div class="menu-section">
             <div class="menu-item">
                 <span>🪙 Всего монет:</span>
                 <span id="totalCoins">0</span>
@@ -2504,7 +3078,7 @@
             </div>
             <div class="menu-item">
                 <span>💋 Поцелуйчики:</span>
-                <span id="totalKisses">0</span> <!-- Добавлено -->
+                <span id="totalKisses">0</span>
             </div>
             <div class="menu-item">
                 <span>⏱️ Время игры:</span>
@@ -2549,6 +3123,112 @@
         </div>
     </div>
     
+    <!-- НОВЫЕ ОКНА -->
+    
+    <!-- ОКНО ЗАДАНИЙ -->
+    <div class="quests-overlay" id="questsOverlay"></div>
+    <div class="quests-window" id="questsWindow">
+        <div class="quests-header">
+            <div class="quests-title">🎯 Задания и достижения</div>
+            <button class="close-quests" id="closeQuests">✕</button>
+        </div>
+        
+        <div class="quest-tabs">
+            <button class="quest-tab active" onclick="switchQuestTab('daily')">
+                Ежедневные
+            </button>
+            <button class="quest-tab" onclick="switchQuestTab('achievements')">
+                Достижения
+            </button>
+            <button class="quest-tab" onclick="switchQuestTab('weekly')">
+                Еженедельные
+            </button>
+        </div>
+        
+        <div id="dailyQuestsContent">
+            <!-- Ежедневные задания будут здесь -->
+        </div>
+        
+        <div id="achievementsContent" style="display: none;">
+            <!-- Достижения будут здесь -->
+        </div>
+        
+        <div id="weeklyQuestsContent" style="display: none;">
+            <!-- Еженедельные задания будут здесь -->
+        </div>
+    </div>
+    
+    <!-- ОКНО МАГАЗИНА МОДЫ -->
+    <div class="fashion-overlay" id="fashionOverlay"></div>
+    <div class="fashion-window" id="fashionWindow">
+        <div class="fashion-header">
+            <div class="fashion-title">👗 Магазин моды для питомца</div>
+            <button class="close-fashion" id="closeFashion">✕</button>
+        </div>
+        
+        <div class="fashion-tabs">
+            <button class="fashion-tab active" onclick="switchFashionTab('hats')">
+                👒 Шапки
+            </button>
+            <button class="fashion-tab" onclick="switchFashionTab('clothes')">
+                👕 Одежда
+            </button>
+            <button class="fashion-tab" onclick="switchFashionTab('accessories')">
+                💎 Аксессуары
+            </button>
+            <button class="fashion-tab" onclick="switchFashionTab('backgrounds')">
+                🎨 Фоны
+            </button>
+        </div>
+        
+        <div id="hatsContent" class="fashion-content">
+            <div class="fashion-grid" id="hatsGrid">
+                <!-- Шапки будут здесь -->
+            </div>
+        </div>
+        
+        <div id="clothesContent" class="fashion-content" style="display: none;">
+            <div class="fashion-grid" id="clothesGrid">
+                <!-- Одежда будет здесь -->
+            </div>
+        </div>
+        
+        <div id="accessoriesContent" class="fashion-content" style="display: none;">
+            <div class="fashion-grid" id="accessoriesGrid">
+                <!-- Аксессуары будут здесь -->
+            </div>
+        </div>
+        
+        <div id="backgroundsContent" class="fashion-content" style="display: none;">
+            <div class="fashion-grid" id="backgroundsGrid">
+                <!-- Фоны будут здесь -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- ОКНО МИНИ-ИГРЫ -->
+    <div class="minigame-overlay" id="minigameOverlay">
+        <div class="minigame-window" id="minigameWindow">
+            <div class="minigame-header">
+                <div class="minigame-title">🎮 Ловля сердечек</div>
+                <button class="close-minigame" id="closeMinigame">✕</button>
+            </div>
+            <div class="minigame-stats">
+                <div class="minigame-timer">Время: <span id="minigameTimer">30</span>с</div>
+                <div class="minigame-score">Очки: <span id="minigameScore">0</span></div>
+            </div>
+            <div class="minigame-canvas" id="minigameCanvas">
+                <!-- Сердечки появляются здесь -->
+            </div>
+            <button class="minigame-start-btn" id="startMinigameBtn">
+                🎮 Начать игру (стоимость: 25💎)
+            </button>
+            <div style="color: #ffccd5; font-size: 0.8rem; margin-top: 10px;">
+                💡 Ловите летающие сердечки! Каждое сердечко = 10 очков
+            </div>
+        </div>
+    </div>
+    
     <!-- УВЕДОМЛЕНИЯ -->
     <div class="notification" id="notification"></div>
     
@@ -2562,6 +3242,14 @@
     
     <button class="pet-button" id="petButton">
         🐰
+    </button>
+    
+    <button class="quests-button" id="questsButton">
+        🎯
+    </button>
+    
+    <button class="minigame-button" id="minigameButton">
+        🎮
     </button>
     
     <button class="gallery-button" id="galleryButton">
@@ -2706,7 +3394,40 @@
             loveMultiplier: 1,
             
             // Стоимость перерождений
-            rebirthBaseCost: 1000000
+            rebirthBaseCost: 1000000,
+            
+            // НОВЫЕ ПЕРЕМЕННЫЕ ДЛЯ ДОПОЛНИТЕЛЬНЫХ ФУНКЦИЙ
+            quests: {
+                daily: [],
+                weekly: [],
+                achievements: [],
+                lastDailyReset: Date.now(),
+                lastWeeklyReset: Date.now()
+            },
+            
+            petFashion: {
+                hats: [],
+                clothes: [],
+                accessories: [],
+                backgrounds: [],
+                equipped: {
+                    hat: null,
+                    clothes: null,
+                    accessory: null,
+                    background: null
+                }
+            },
+            
+            minigame: {
+                score: 0,
+                timeLeft: 30,
+                isActive: false,
+                hearts: [],
+                lastHeartSpawn: 0,
+                timerInterval: null,
+                spawnInterval: null,
+                animationFrame: null
+            }
         };
         
         // Список животных для обычной галереи
@@ -2852,6 +3573,179 @@
             }
         ];
         
+        // НОВЫЕ ДАННЫЕ ДЛЯ ДОПОЛНИТЕЛЬНЫХ ФУНКЦИЙ
+        const dailyQuestsData = [
+            {
+                id: 1,
+                name: "💖 Первые сердечки",
+                description: "Соберите 100 сердечек",
+                type: "collect_hearts",
+                target: 100,
+                reward: { diamonds: 5, coins: 100 },
+                progress: 0,
+                claimed: false
+            },
+            {
+                id: 2,
+                name: "🔄 Усиление любви",
+                description: "Купите 1 улучшение",
+                type: "buy_upgrade",
+                target: 1,
+                reward: { diamonds: 10, coins: 200 },
+                progress: 0,
+                claimed: false
+            },
+            {
+                id: 3,
+                name: "🐰 Забота о питомце",
+                description: "Погладьте питомца 3 раза",
+                type: "pet_pet",
+                target: 3,
+                reward: { diamonds: 8, coins: 150 },
+                progress: 0,
+                claimed: false
+            },
+            {
+                id: 4,
+                name: "💰 Богатый кликер",
+                description: "Заработайте 1000 монет",
+                type: "earn_coins",
+                target: 1000,
+                reward: { diamonds: 15, coins: 300 },
+                progress: 0,
+                claimed: false
+            },
+            {
+                id: 5,
+                name: "🎁 Открыватель",
+                description: "Откройте 1 зверька",
+                type: "open_animal",
+                target: 1,
+                reward: { diamonds: 20, coins: 500 },
+                progress: 0,
+                claimed: false
+            }
+        ];
+        
+        const weeklyQuestsData = [
+            {
+                id: 101,
+                name: "🏆 Мастер кликов",
+                description: "Совершите 5000 кликов",
+                type: "total_clicks",
+                target: 5000,
+                reward: { diamonds: 50, coins: 1000, kisses: 10 },
+                progress: 0,
+                claimed: false
+            },
+            {
+                id: 102,
+                name: "🌟 Питомец-чемпион",
+                description: "Достигните 5 уровня питомца",
+                type: "pet_level",
+                target: 5,
+                reward: { diamonds: 75, coins: 1500, kisses: 15 },
+                progress: 0,
+                claimed: false
+            },
+            {
+                id: 103,
+                name: "💎 Алмазный магнат",
+                description: "Соберите 500 алмазов",
+                type: "collect_diamonds",
+                target: 500,
+                reward: { diamonds: 100, coins: 2000, kisses: 20 },
+                progress: 0,
+                claimed: false
+            }
+        ];
+        
+        const achievementsData = [
+            {
+                id: 201,
+                name: "🥇 Первые шаги",
+                description: "Соберите первую 1000 монет",
+                type: "total_coins",
+                target: 1000,
+                reward: { diamonds: 25, title: "Новичок" },
+                progress: 0,
+                completed: false,
+                claimed: false
+            },
+            {
+                id: 202,
+                name: "🎯 Коллекционер",
+                description: "Откройте 25 зверьков",
+                type: "total_animals",
+                target: 25,
+                reward: { diamonds: 50, title: "Коллекционер" },
+                progress: 0,
+                completed: false,
+                claimed: false
+            },
+            {
+                id: 203,
+                name: "💪 Ветеран",
+                description: "Играйте 3 дня подряд",
+                type: "play_days",
+                target: 3,
+                reward: { diamonds: 100, title: "Ветеран" },
+                progress: 0,
+                completed: false,
+                claimed: false
+            },
+            {
+                id: 204,
+                name: "👑 Король кликов",
+                description: "Совершите 100000 кликов",
+                type: "total_clicks",
+                target: 100000,
+                reward: { diamonds: 250, title: "Король кликов" },
+                progress: 0,
+                completed: false,
+                claimed: false
+            },
+            {
+                id: 205,
+                name: "💖 Мастер любви",
+                description: "Соберите 1000000 сердечек",
+                type: "total_hearts",
+                target: 1000000,
+                reward: { diamonds: 500, title: "Мастер любви" },
+                progress: 0,
+                completed: false,
+                claimed: false
+            }
+        ];
+        
+        const fashionItems = {
+            hats: [
+                { id: 1, emoji: "👑", name: "Корона", price: 100, type: "hat" },
+                { id: 2, emoji: "🎩", name: "Цилиндр", price: 75, type: "hat" },
+                { id: 3, emoji: "🧢", name: "Кепка", price: 50, type: "hat" },
+                { id: 4, emoji: "🎓", name: "Шапочка", price: 150, type: "hat" },
+                { id: 5, emoji: "👒", name: "Шляпка", price: 80, type: "hat" }
+            ],
+            clothes: [
+                { id: 101, emoji: "👔", name: "Галстук", price: 120, type: "clothes" },
+                { id: 102, emoji: "👗", name: "Платье", price: 180, type: "clothes" },
+                { id: 103, emoji: "🥼", name: "Халат", price: 90, type: "clothes" },
+                { id: 104, emoji: "🦺", name: "Жилет", price: 70, type: "clothes" }
+            ],
+            accessories: [
+                { id: 201, emoji: "👓", name: "Очки", price: 60, type: "accessory" },
+                { id: 202, emoji: "💍", name: "Кольцо", price: 300, type: "accessory" },
+                { id: 203, emoji: "🕶️", name: "Солнечные очки", price: 80, type: "accessory" },
+                { id: 204, emoji: "🎀", name: "Бантик", price: 30, type: "accessory" }
+            ],
+            backgrounds: [
+                { id: 301, emoji: "🏰", name: "Замок", price: 250, type: "background" },
+                { id: 302, emoji: "🌴", name: "Пляж", price: 150, type: "background" },
+                { id: 303, emoji: "🎡", name: "Парк", price: 100, type: "background" },
+                { id: 304, emoji: "🌌", name: "Космос", price: 400, type: "background" }
+            ]
+        };
+        
         // ========== УПРОЩЕННЫЙ КОД ЗАГРУЗКИ ==========
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM загружен, начинаем загрузку игры...');
@@ -2871,6 +3765,7 @@
             let updateIntervals = null;
             let petUpdateInterval = null;
             let galleryDiamondsInterval = null;
+            let minigameUpdateInterval = null;
             
             // Простая симуляция загрузки
             let progress = 0;
@@ -2914,6 +3809,8 @@
                     document.getElementById('shopButton').style.display = 'flex';
                     document.getElementById('galleryButton').style.display = 'flex';
                     document.getElementById('petButton').style.display = 'flex';
+                    document.getElementById('questsButton').style.display = 'flex';
+                    document.getElementById('minigameButton').style.display = 'flex';
                     bottomButtons.style.display = 'flex';
                     
                     if (game.musicEnabled) {
@@ -3202,45 +4099,55 @@
                 const exchangeContent = document.getElementById('exchangeContent');
                 exchangeContent.innerHTML = '';
                 
-                // Первая карточка: 10 алмазов на 200 монет
-                const canAffordDiamonds = game.diamonds >= 10;
-                const exchangeItem1 = document.createElement('div');
-                exchangeItem1.className = 'exchange-item';
+                const exchangeItem = document.createElement('div');
+                exchangeItem.className = 'exchange-item';
                 
-                exchangeItem1.innerHTML = `
-                    <div class="exchange-item-header">
-                        <div class="exchange-item-name">💎 → 🪙 Обмен алмазов</div>
-                        <div class="exchange-item-cost">10 💎</div>
+                exchangeItem.innerHTML = `
+                    <div class="exchange-input-container">
+                        <div class="exchange-input-row">
+                            <input type="number" id="coinsInput" class="exchange-input" value="1000" min="10" step="10">
+                            <div class="exchange-currency">🪙</div>
+                        </div>
+                        <div class="exchange-arrow">↓</div>
+                        <div class="exchange-input-row">
+                            <input type="number" id="diamondsInput" class="exchange-input" value="10" min="1" step="1">
+                            <div class="exchange-currency">💎</div>
+                        </div>
                     </div>
-                    <div style="color: #ffccd5; font-size: 0.85rem; margin: 5px 0;">
-                        Обменяйте 10 алмазов на 200 монет
+                    
+                    <div class="exchange-result">
+                        <div style="color: #ffccd5; font-size: 0.9rem;">Курс обмена:</div>
+                        <div class="exchange-result-value">1000 🪙 = 10 💎</div>
+                        <div style="color: #ffccd5; font-size: 0.8rem;">или 1 💎 = 100 🪙</div>
                     </div>
-                    <button class="exchange-btn" onclick="exchangeDiamondsForCoins()" ${canAffordDiamonds ? '' : 'disabled'}>
-                        ${canAffordDiamonds ? 'Обменять' : 'Недостаточно алмазов'}
-                    </button>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button class="exchange-btn" onclick="exchangeCoinsForDiamonds()" id="exchangeCoinsBtn">
+                            Обменять 🪙 на 💎
+                        </button>
+                        <button class="exchange-btn" onclick="exchangeDiamondsForCoins()" id="exchangeDiamondsBtn">
+                            Обменять 💎 на 🪙
+                        </button>
+                    </div>
                 `;
                 
-                exchangeContent.appendChild(exchangeItem1);
+                exchangeContent.appendChild(exchangeItem);
                 
-                // Вторая карточка: 1000 монет на 10 алмазов
-                const canAffordCoins = game.coins >= 1000;
-                const exchangeItem2 = document.createElement('div');
-                exchangeItem2.className = 'exchange-item';
+                // Добавляем обработчики событий для полей ввода
+                const coinsInput = document.getElementById('coinsInput');
+                const diamondsInput = document.getElementById('diamondsInput');
                 
-                exchangeItem2.innerHTML = `
-                    <div class="exchange-item-header">
-                        <div class="exchange-item-name">🪙 → 💎 Обмен монет</div>
-                        <div class="exchange-item-cost">1000 🪙</div>
-                    </div>
-                    <div style="color: #ffccd5; font-size: 0.85rem; margin: 5px 0;">
-                        Обменяйте 1000 монет на 10 алмазов
-                    </div>
-                    <button class="exchange-btn" onclick="exchangeCoinsForDiamonds()" ${canAffordCoins ? '' : 'disabled'}>
-                        ${canAffordCoins ? 'Обменять' : 'Недостаточно монет'}
-                    </button>
-                `;
+                coinsInput.addEventListener('input', function() {
+                    const coins = parseInt(this.value) || 0;
+                    const diamonds = Math.floor(coins / 100);
+                    diamondsInput.value = diamonds > 0 ? diamonds : 1;
+                });
                 
-                exchangeContent.appendChild(exchangeItem2);
+                diamondsInput.addEventListener('input', function() {
+                    const diamonds = parseInt(this.value) || 0;
+                    const coins = diamonds * 100;
+                    coinsInput.value = coins > 0 ? coins : 100;
+                });
             }
             
             // ========== ФУНКЦИИ ДЛЯ УЛУЧШЕНИЙ ==========
@@ -3587,7 +4494,7 @@
                 }
                 
                 // Обновляем стоимость подарить любовь с учетом множителя
-                const baseCost = 20000;
+                const baseCost = 10000; // ИЗМЕНЕНО с 20000 на 10000
                 let actualCost = baseCost;
                 
                 if (game.loveMultiplier === 0) {
@@ -3763,6 +4670,10 @@
                         game.coins += coinsPerClick;
                         game.totalCoins += coinsPerClick;
                         
+                        // Отслеживаем прогресс заданий
+                        trackQuestProgress('collect_hearts', Math.floor(coinsPerClick / 10));
+                        trackQuestProgress('earn_coins', coinsPerClick);
+                        
                         checkAchievements();
                         updateDisplay();
                         
@@ -3933,6 +4844,765 @@
                 }, 5000);
             }
             
+            // ========== НОВЫЕ ФУНКЦИИ ДЛЯ ДОПОЛНИТЕЛЬНЫХ СИСТЕМ ==========
+            
+            // ========== ФУНКЦИИ ДЛЯ ЗАДАНИЙ ==========
+            function initQuests() {
+                if (!game.quests.daily.length) {
+                    game.quests.daily = JSON.parse(JSON.stringify(dailyQuestsData));
+                }
+                if (!game.quests.weekly.length) {
+                    game.quests.weekly = JSON.parse(JSON.stringify(weeklyQuestsData));
+                }
+                if (!game.quests.achievements.length) {
+                    game.quests.achievements = JSON.parse(JSON.stringify(achievementsData));
+                }
+                
+                const now = Date.now();
+                const dayInMs = 24 * 60 * 60 * 1000;
+                
+                if (!game.quests.lastDailyReset || (now - game.quests.lastDailyReset) > dayInMs) {
+                    game.quests.daily.forEach(quest => {
+                        quest.progress = 0;
+                        quest.claimed = false;
+                    });
+                    game.quests.lastDailyReset = now;
+                }
+                
+                const weekInMs = 7 * dayInMs;
+                if (!game.quests.lastWeeklyReset || (now - game.quests.lastWeeklyReset) > weekInMs) {
+                    game.quests.weekly.forEach(quest => {
+                        quest.progress = 0;
+                        quest.claimed = false;
+                    });
+                    game.quests.lastWeeklyReset = now;
+                }
+                
+                updateQuestProgress();
+                updateQuestButton();
+            }
+            
+            function updateQuestProgress() {
+                game.quests.achievements.forEach(achievement => {
+                    if (achievement.completed) return;
+                    
+                    switch(achievement.type) {
+                        case 'total_coins':
+                            achievement.progress = game.totalCoins;
+                            break;
+                        case 'total_animals':
+                            achievement.progress = game.unlockedAnimals + game.exclusiveUnlockedAnimals;
+                            break;
+                        case 'play_days':
+                            achievement.progress = Math.floor(game.playTime / 60 / 60 / 24);
+                            break;
+                        case 'total_clicks':
+                            achievement.progress = game.totalHearts;
+                            break;
+                        case 'total_hearts':
+                            achievement.progress = game.totalHearts;
+                            break;
+                    }
+                    
+                    if (achievement.progress >= achievement.target) {
+                        achievement.completed = true;
+                        showQuestNotification(`🏆 Достижение получено: ${achievement.name}!`);
+                    }
+                });
+            }
+            
+            function updateQuestButton() {
+                const questsButton = document.getElementById('questsButton');
+                const completedQuestsCount = document.getElementById('completedQuestsCount');
+                const hasCompletedQuests = checkForCompletedQuests();
+                
+                if (hasCompletedQuests) {
+                    questsButton.classList.add('active');
+                    questsButton.title = 'Есть задания для получения наград!';
+                } else {
+                    questsButton.classList.remove('active');
+                    questsButton.title = 'Задания';
+                }
+                
+                let completedCount = 0;
+                game.quests.daily.forEach(q => { if (q.progress >= q.target && !q.claimed) completedCount++; });
+                game.quests.weekly.forEach(q => { if (q.progress >= q.target && !q.claimed) completedCount++; });
+                game.quests.achievements.forEach(a => { if (a.completed && !a.claimed) completedCount++; });
+                
+                completedQuestsCount.textContent = completedCount;
+            }
+            
+            function checkForCompletedQuests() {
+                for (const quest of game.quests.daily) {
+                    if (quest.progress >= quest.target && !quest.claimed) {
+                        return true;
+                    }
+                }
+                
+                for (const quest of game.quests.weekly) {
+                    if (quest.progress >= quest.target && !quest.claimed) {
+                        return true;
+                    }
+                }
+                
+                for (const achievement of game.quests.achievements) {
+                    if (achievement.completed && !achievement.claimed) {
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            function renderQuests() {
+                renderDailyQuests();
+                renderAchievements();
+                renderWeeklyQuests();
+                updateQuestButton();
+            }
+            
+            function renderDailyQuests() {
+                const content = document.getElementById('dailyQuestsContent');
+                content.innerHTML = '';
+                
+                game.quests.daily.forEach(quest => {
+                    const progressPercent = Math.min((quest.progress / quest.target) * 100, 100);
+                    const canClaim = quest.progress >= quest.target && !quest.claimed;
+                    
+                    const questEl = document.createElement('div');
+                    questEl.className = `quest-item ${quest.claimed ? 'completed' : ''}`;
+                    
+                    questEl.innerHTML = `
+                        <div class="quest-header">
+                            <div class="quest-name">${quest.name}</div>
+                            <div class="quest-reward">
+                                ${quest.reward.diamonds ? `${quest.reward.diamonds}💎` : ''}
+                                ${quest.reward.coins ? `${quest.reward.coins}🪙` : ''}
+                            </div>
+                        </div>
+                        <div style="color: #ffccd5; font-size: 0.85rem; margin: 5px 0;">
+                            ${quest.description}
+                        </div>
+                        <div class="quest-info">
+                            <div>Прогресс: ${Math.floor(quest.progress)}/${quest.target}</div>
+                            <div>${quest.claimed ? '✅ Получено' : ''}</div>
+                        </div>
+                        <div class="quest-progress">
+                            <div class="quest-progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <button class="quest-claim-btn" onclick="claimQuest('daily', ${quest.id})" 
+                                ${canClaim ? '' : 'disabled'}>
+                            ${quest.claimed ? '✅ Награда получена' : (canClaim ? '🎁 Получить награду' : 'Не выполнено')}
+                        </button>
+                    `;
+                    
+                    content.appendChild(questEl);
+                });
+            }
+            
+            function renderAchievements() {
+                const content = document.getElementById('achievementsContent');
+                content.innerHTML = '';
+                
+                game.quests.achievements.forEach(achievement => {
+                    const progressPercent = Math.min((achievement.progress / achievement.target) * 100, 100);
+                    const canClaim = achievement.completed && !achievement.claimed;
+                    
+                    const questEl = document.createElement('div');
+                    questEl.className = `quest-item ${achievement.claimed ? 'completed' : ''}`;
+                    
+                    questEl.innerHTML = `
+                        <div class="quest-header">
+                            <div class="quest-name">${achievement.name}</div>
+                            <div class="quest-reward">
+                                ${achievement.reward.diamonds ? `${achievement.reward.diamonds}💎` : ''}
+                                ${achievement.reward.title ? `🏷️ ${achievement.reward.title}` : ''}
+                            </div>
+                        </div>
+                        <div style="color: #ffccd5; font-size: 0.85rem; margin: 5px 0;">
+                            ${achievement.description}
+                        </div>
+                        <div class="quest-info">
+                            <div>Прогресс: ${formatNumber(achievement.progress)}/${formatNumber(achievement.target)}</div>
+                            <div>${achievement.claimed ? '✅ Получено' : ''}</div>
+                        </div>
+                        <div class="quest-progress">
+                            <div class="quest-progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <button class="quest-claim-btn" onclick="claimAchievement(${achievement.id})" 
+                                ${canClaim ? '' : 'disabled'}>
+                            ${achievement.claimed ? '✅ Награда получена' : (canClaim ? '🏆 Получить награду' : 'Не выполнено')}
+                        </button>
+                    `;
+                    
+                    content.appendChild(questEl);
+                });
+            }
+            
+            function renderWeeklyQuests() {
+                const content = document.getElementById('weeklyQuestsContent');
+                content.innerHTML = '';
+                
+                game.quests.weekly.forEach(quest => {
+                    const progressPercent = Math.min((quest.progress / quest.target) * 100, 100);
+                    const canClaim = quest.progress >= quest.target && !quest.claimed;
+                    
+                    const questEl = document.createElement('div');
+                    questEl.className = `quest-item ${quest.claimed ? 'completed' : ''}`;
+                    
+                    questEl.innerHTML = `
+                        <div class="quest-header">
+                            <div class="quest-name">${quest.name}</div>
+                            <div class="quest-reward">
+                                ${quest.reward.diamonds ? `${quest.reward.diamonds}💎` : ''}
+                                ${quest.reward.coins ? `${quest.reward.coins}🪙` : ''}
+                                ${quest.reward.kisses ? `${quest.reward.kisses}💋` : ''}
+                            </div>
+                        </div>
+                        <div style="color: #ffccd5; font-size: 0.85rem; margin: 5px 0;">
+                            ${quest.description}
+                        </div>
+                        <div class="quest-info">
+                            <div>Прогресс: ${Math.floor(quest.progress)}/${quest.target}</div>
+                            <div>${quest.claimed ? '✅ Получено' : ''}</div>
+                        </div>
+                        <div class="quest-progress">
+                            <div class="quest-progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <button class="quest-claim-btn" onclick="claimQuest('weekly', ${quest.id})" 
+                                ${canClaim ? '' : 'disabled'}>
+                            ${quest.claimed ? '✅ Награда получена' : (canClaim ? '🎁 Получить награду' : 'Не выполнено')}
+                        </button>
+                    `;
+                    
+                    content.appendChild(questEl);
+                });
+            }
+            
+            function showQuestNotification(text) {
+                const notification = document.createElement('div');
+                notification.className = 'quest-notification';
+                notification.textContent = text;
+                notification.style.animation = 'achievementNotification 6s ease-in-out forwards';
+                notification.onclick = function() {
+                    document.getElementById('questsOverlay').style.display = 'block';
+                    document.getElementById('questsWindow').style.display = 'block';
+                    renderQuests();
+                    
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                };
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 6000);
+            }
+            
+            window.switchQuestTab = function(tab) {
+                const tabs = document.querySelectorAll('.quest-tab');
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                document.getElementById('dailyQuestsContent').style.display = 'none';
+                document.getElementById('achievementsContent').style.display = 'none';
+                document.getElementById('weeklyQuestsContent').style.display = 'none';
+                
+                if (tab === 'daily') {
+                    document.querySelector('.quest-tab[onclick="switchQuestTab(\'daily\')"]').classList.add('active');
+                    document.getElementById('dailyQuestsContent').style.display = 'block';
+                    renderDailyQuests();
+                } else if (tab === 'achievements') {
+                    document.querySelector('.quest-tab[onclick="switchQuestTab(\'achievements\')"]').classList.add('active');
+                    document.getElementById('achievementsContent').style.display = 'block';
+                    renderAchievements();
+                } else {
+                    document.querySelector('.quest-tab[onclick="switchQuestTab(\'weekly\')"]').classList.add('active');
+                    document.getElementById('weeklyQuestsContent').style.display = 'block';
+                    renderWeeklyQuests();
+                }
+            };
+            
+            window.claimQuest = function(type, id) {
+                let questsArray;
+                if (type === 'daily') {
+                    questsArray = game.quests.daily;
+                } else {
+                    questsArray = game.quests.weekly;
+                }
+                
+                const quest = questsArray.find(q => q.id === id);
+                if (!quest || quest.progress < quest.target || quest.claimed) return;
+                
+                if (quest.reward.diamonds) {
+                    game.diamonds += quest.reward.diamonds;
+                    game.totalDiamonds += quest.reward.diamonds;
+                }
+                if (quest.reward.coins) {
+                    game.coins += quest.reward.coins;
+                    game.totalCoins += quest.reward.coins;
+                }
+                if (quest.reward.kisses) {
+                    game.kisses += quest.reward.kisses;
+                    game.totalKissesEarned += quest.reward.kisses;
+                }
+                
+                quest.claimed = true;
+                
+                updateDisplay();
+                updateDiamondsDisplay();
+                updateQuestButton();
+                renderQuests();
+                
+                showNotification(`🎉 Получена награда за задание: ${quest.name}!`);
+                saveGame();
+            };
+            
+            window.claimAchievement = function(id) {
+                const achievement = game.quests.achievements.find(a => a.id === id);
+                if (!achievement || !achievement.completed || achievement.claimed) return;
+                
+                if (achievement.reward.diamonds) {
+                    game.diamonds += achievement.reward.diamonds;
+                    game.totalDiamonds += achievement.reward.diamonds;
+                }
+                if (achievement.reward.title) {
+                    showNotification(`🏆 Получено звание: ${achievement.reward.title}!`);
+                }
+                
+                achievement.claimed = true;
+                
+                updateDisplay();
+                updateDiamondsDisplay();
+                updateQuestButton();
+                renderAchievements();
+                
+                showNotification(`🏆 Получена награда за достижение: ${achievement.name}!`);
+                saveGame();
+            };
+            
+            function trackQuestProgress(type, amount = 1) {
+                game.quests.daily.forEach(quest => {
+                    if (quest.claimed) return;
+                    
+                    if (quest.type === type) {
+                        quest.progress += amount;
+                        if (quest.progress >= quest.target) {
+                            updateQuestButton();
+                            showQuestNotification(`🎯 Задание выполнено: ${quest.name}!`);
+                        }
+                    }
+                });
+                
+                game.quests.weekly.forEach(quest => {
+                    if (quest.claimed) return;
+                    
+                    if (quest.type === type) {
+                        quest.progress += amount;
+                        if (quest.progress >= quest.target) {
+                            updateQuestButton();
+                            showQuestNotification(`🎯 Еженедельное задание выполнено: ${quest.name}!`);
+                        }
+                    }
+                });
+                
+                updateQuestProgress();
+                saveGame();
+            }
+            
+            // ========== ФУНКЦИИ ДЛЯ МОДЫ ==========
+            function initFashion() {
+                if (game.petFashion.hats.length === 0) {
+                    game.petFashion.hats.push({ id: 0, emoji: "🐰", name: "Без шапки", price: 0, type: "hat", owned: true });
+                }
+                
+                Object.keys(fashionItems).forEach(category => {
+                    fashionItems[category].forEach(item => {
+                        const exists = game.petFashion[category].some(f => f.id === item.id);
+                        if (!exists) {
+                            game.petFashion[category].push({ ...item, owned: false });
+                        }
+                    });
+                });
+            }
+            
+            function renderFashion() {
+                renderHats();
+                renderClothes();
+                renderAccessories();
+                renderBackgrounds();
+            }
+            
+            function renderHats() {
+                const grid = document.getElementById('hatsGrid');
+                grid.innerHTML = '';
+                
+                game.petFashion.hats.forEach(item => {
+                    const isEquipped = game.petFashion.equipped.hat === item.id;
+                    const canBuy = !item.owned && game.diamonds >= item.price;
+                    
+                    const itemEl = document.createElement('div');
+                    itemEl.className = `fashion-item ${item.owned ? 'owned' : ''} ${isEquipped ? 'equipped' : ''}`;
+                    itemEl.onclick = () => handleFashionItemClick('hats', item);
+                    
+                    itemEl.innerHTML = `
+                        <div class="fashion-emoji">${item.emoji}</div>
+                        <div class="fashion-name">${item.name}</div>
+                        <div class="fashion-price ${item.price === 0 ? 'free' : ''}">
+                            ${item.owned ? '✅' : (item.price === 0 ? 'Бесплатно' : `${item.price}💎`)}
+                        </div>
+                        ${isEquipped ? '<div style="font-size: 0.6rem; color: #ffd700; margin-top: 3px;">Надето</div>' : ''}
+                    `;
+                    
+                    grid.appendChild(itemEl);
+                });
+            }
+            
+            function renderClothes() {
+                const grid = document.getElementById('clothesGrid');
+                grid.innerHTML = '';
+                
+                game.petFashion.clothes.forEach(item => {
+                    const isEquipped = game.petFashion.equipped.clothes === item.id;
+                    
+                    const itemEl = document.createElement('div');
+                    itemEl.className = `fashion-item ${item.owned ? 'owned' : ''} ${isEquipped ? 'equipped' : ''}`;
+                    itemEl.onclick = () => handleFashionItemClick('clothes', item);
+                    
+                    itemEl.innerHTML = `
+                        <div class="fashion-emoji">${item.emoji}</div>
+                        <div class="fashion-name">${item.name}</div>
+                        <div class="fashion-price">
+                            ${item.owned ? '✅' : `${item.price}💎`}
+                        </div>
+                        ${isEquipped ? '<div style="font-size: 0.6rem; color: #ffd700; margin-top: 3px;">Надето</div>' : ''}
+                    `;
+                    
+                    grid.appendChild(itemEl);
+                });
+            }
+            
+            function renderAccessories() {
+                const grid = document.getElementById('accessoriesGrid');
+                grid.innerHTML = '';
+                
+                game.petFashion.accessories.forEach(item => {
+                    const isEquipped = game.petFashion.equipped.accessory === item.id;
+                    
+                    const itemEl = document.createElement('div');
+                    itemEl.className = `fashion-item ${item.owned ? 'owned' : ''} ${isEquipped ? 'equipped' : ''}`;
+                    itemEl.onclick = () => handleFashionItemClick('accessories', item);
+                    
+                    itemEl.innerHTML = `
+                        <div class="fashion-emoji">${item.emoji}</div>
+                        <div class="fashion-name">${item.name}</div>
+                        <div class="fashion-price">
+                            ${item.owned ? '✅' : `${item.price}💎`}
+                        </div>
+                        ${isEquipped ? '<div style="font-size: 0.6rem; color: #ffd700; margin-top: 3px;">Надето</div>' : ''}
+                    `;
+                    
+                    grid.appendChild(itemEl);
+                });
+            }
+            
+            function renderBackgrounds() {
+                const grid = document.getElementById('backgroundsGrid');
+                grid.innerHTML = '';
+                
+                game.petFashion.backgrounds.forEach(item => {
+                    const isEquipped = game.petFashion.equipped.background === item.id;
+                    
+                    const itemEl = document.createElement('div');
+                    itemEl.className = `fashion-item ${item.owned ? 'owned' : ''} ${isEquipped ? 'equipped' : ''}`;
+                    itemEl.onclick = () => handleFashionItemClick('backgrounds', item);
+                    
+                    itemEl.innerHTML = `
+                        <div class="fashion-emoji">${item.emoji}</div>
+                        <div class="fashion-name">${item.name}</div>
+                        <div class="fashion-price">
+                            ${item.owned ? '✅' : `${item.price}💎`}
+                        </div>
+                        ${isEquipped ? '<div style="font-size: 0.6rem; color: #ffd700; margin-top: 3px;">Установлено</div>' : ''}
+                    `;
+                    
+                    grid.appendChild(itemEl);
+                });
+            }
+            
+            function handleFashionItemClick(category, item) {
+                if (!item.owned) {
+                    if (game.diamonds < item.price) {
+                        showNotification(`❌ Нужно ${item.price} алмазов для покупки!`);
+                        return;
+                    }
+                    
+                    game.diamonds -= item.price;
+                    item.owned = true;
+                    
+                    updateDiamondsDisplay();
+                    showNotification(`✅ Куплен предмет: ${item.name} за ${item.price} алмазов!`);
+                    
+                    equipFashionItem(category, item.id);
+                } else {
+                    if (getEquippedId(category) === item.id) {
+                        equipFashionItem(category, null);
+                    } else {
+                        equipFashionItem(category, item.id);
+                    }
+                }
+                
+                renderFashion();
+                saveGame();
+            }
+            
+            function getEquippedId(category) {
+                switch(category) {
+                    case 'hats': return game.petFashion.equipped.hat;
+                    case 'clothes': return game.petFashion.equipped.clothes;
+                    case 'accessories': return game.petFashion.equipped.accessory;
+                    case 'backgrounds': return game.petFashion.equipped.background;
+                    default: return null;
+                }
+            }
+            
+            function equipFashionItem(category, itemId) {
+                switch(category) {
+                    case 'hats':
+                        game.petFashion.equipped.hat = itemId;
+                        break;
+                    case 'clothes':
+                        game.petFashion.equipped.clothes = itemId;
+                        break;
+                    case 'accessories':
+                        game.petFashion.equipped.accessory = itemId;
+                        break;
+                    case 'backgrounds':
+                        game.petFashion.equipped.background = itemId;
+                        break;
+                }
+                
+                showNotification(`👗 Предмет обновлен!`);
+            }
+            
+            window.switchFashionTab = function(tab) {
+                const tabs = document.querySelectorAll('.fashion-tab');
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                document.querySelectorAll('.fashion-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                document.getElementById(`${tab}Content`).style.display = 'block';
+                document.querySelector(`.fashion-tab[onclick="switchFashionTab('${tab}')"]`).classList.add('active');
+            };
+            
+            // ========== ФУНКЦИИ ДЛЯ МИНИ-ИГРЫ ==========
+            function initMinigame() {
+                const canvas = document.getElementById('minigameCanvas');
+                canvas.innerHTML = '';
+                game.minigame.score = 0;
+                game.minigame.timeLeft = 30;
+                game.minigame.isActive = false;
+                game.minigame.hearts = [];
+                game.minigame.lastHeartSpawn = 0;
+                
+                // Останавливаем предыдущие интервалы, если они есть
+                if (game.minigame.timerInterval) {
+                    clearInterval(game.minigame.timerInterval);
+                }
+                if (game.minigame.spawnInterval) {
+                    clearInterval(game.minigame.spawnInterval);
+                }
+                if (game.minigame.animationFrame) {
+                    cancelAnimationFrame(game.minigame.animationFrame);
+                }
+                
+                // Обновляем отображение
+                document.getElementById('minigameTimer').textContent = game.minigame.timeLeft;
+                document.getElementById('minigameScore').textContent = game.minigame.score;
+                document.getElementById('startMinigameBtn').disabled = false;
+                document.getElementById('startMinigameBtn').textContent = '🎮 Начать игру (стоимость: 25💎)';
+            }
+            
+            window.startMinigame = function() {
+                if (game.diamonds < 25) {
+                    showNotification(`❌ Нужно 25 алмазов для запуска мини-игры!`);
+                    return;
+                }
+                
+                if (game.minigame.isActive) return;
+                
+                game.diamonds -= 25;
+                updateDiamondsDisplay();
+                
+                initMinigame();
+                game.minigame.isActive = true;
+                
+                document.getElementById('minigameOverlay').style.display = 'flex';
+                document.getElementById('startMinigameBtn').disabled = true;
+                document.getElementById('startMinigameBtn').textContent = '🎮 Игра идет...';
+                
+                // Таймер игры
+                game.minigame.timerInterval = setInterval(() => {
+                    if (!game.minigame.isActive) {
+                        clearInterval(game.minigame.timerInterval);
+                        return;
+                    }
+                    
+                    game.minigame.timeLeft--;
+                    document.getElementById('minigameTimer').textContent = game.minigame.timeLeft;
+                    
+                    if (game.minigame.timeLeft <= 0) {
+                        endMinigame();
+                    }
+                }, 1000);
+                
+                // Спавн сердечек
+                game.minigame.spawnInterval = setInterval(() => {
+                    if (!game.minigame.isActive) return;
+                    spawnHeart();
+                }, 800);
+                
+                // Запускаем анимацию
+                updateHearts();
+                
+                showNotification('🎮 Мини-игра началась! Ловите сердечки!');
+            };
+            
+            function spawnHeart() {
+                if (!game.minigame.isActive) return;
+                
+                const canvas = document.getElementById('minigameCanvas');
+                if (!canvas) return;
+                
+                const heartSize = 30;
+                const x = Math.random() * (canvas.offsetWidth - heartSize);
+                const y = -heartSize;
+                
+                const heart = document.createElement('div');
+                heart.className = 'minigame-heart';
+                heart.textContent = '💖';
+                heart.style.left = x + 'px';
+                heart.style.top = y + 'px';
+                heart.style.fontSize = heartSize + 'px';
+                heart.style.position = 'absolute';
+                heart.style.cursor = 'pointer';
+                heart.style.zIndex = '1';
+                heart.onclick = function(e) {
+                    e.stopPropagation();
+                    catchHeart(heart);
+                };
+                
+                canvas.appendChild(heart);
+                game.minigame.hearts.push({
+                    element: heart,
+                    x: x,
+                    y: y,
+                    speed: 2 + Math.random() * 3
+                });
+                
+                if (game.minigame.hearts.length > 20) {
+                    const oldHeart = game.minigame.hearts.shift();
+                    if (oldHeart.element.parentNode) {
+                        oldHeart.element.remove();
+                    }
+                }
+            }
+            
+            function updateHearts() {
+                if (!game.minigame.isActive) return;
+                
+                const canvas = document.getElementById('minigameCanvas');
+                if (!canvas) return;
+                
+                const canvasHeight = canvas.offsetHeight;
+                
+                for (let i = game.minigame.hearts.length - 1; i >= 0; i--) {
+                    const heart = game.minigame.hearts[i];
+                    heart.y += heart.speed;
+                    heart.element.style.top = heart.y + 'px';
+                    
+                    if (heart.y > canvasHeight) {
+                        heart.element.remove();
+                        game.minigame.hearts.splice(i, 1);
+                    }
+                }
+                
+                game.minigame.animationFrame = requestAnimationFrame(updateHearts);
+            }
+            
+            function catchHeart(heartElement) {
+                if (!game.minigame.isActive) return;
+                
+                game.minigame.score += 10;
+                document.getElementById('minigameScore').textContent = game.minigame.score;
+                
+                // Анимация пойманного сердечка
+                heartElement.style.transform = 'scale(1.5)';
+                heartElement.style.opacity = '0.5';
+                heartElement.style.transition = 'transform 0.2s, opacity 0.2s';
+                
+                setTimeout(() => {
+                    if (heartElement.parentNode) {
+                        heartElement.remove();
+                    }
+                }, 200);
+                
+                // Удаляем сердечко из массива
+                const index = game.minigame.hearts.findIndex(h => h.element === heartElement);
+                if (index > -1) {
+                    game.minigame.hearts.splice(index, 1);
+                }
+                
+                // Вибрация, если включена
+                if (game.vibration && navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+            }
+            
+            function endMinigame() {
+                if (!game.minigame.isActive) return;
+                
+                game.minigame.isActive = false;
+                
+                clearInterval(game.minigame.timerInterval);
+                clearInterval(game.minigame.spawnInterval);
+                cancelAnimationFrame(game.minigame.animationFrame);
+                
+                const baseReward = Math.floor(game.minigame.score / 10);
+                const bonus = game.minigame.score >= 500 ? 100 : (game.minigame.score >= 300 ? 50 : 0);
+                const totalReward = baseReward + bonus;
+                
+                game.coins += totalReward;
+                game.totalCoins += totalReward;
+                
+                updateDisplay();
+                
+                // Удаляем все сердечки
+                game.minigame.hearts.forEach(heart => {
+                    if (heart.element.parentNode) {
+                        heart.element.remove();
+                    }
+                });
+                game.minigame.hearts = [];
+                
+                setTimeout(() => {
+                    document.getElementById('minigameOverlay').style.display = 'none';
+                    document.getElementById('startMinigameBtn').disabled = false;
+                    document.getElementById('startMinigameBtn').textContent = '🎮 Начать игру (стоимость: 25💎)';
+                    
+                    showNotification(`🎮 Мини-игра завершена! Счет: ${game.minigame.score}. Награда: ${totalReward} монет!`);
+                    
+                    trackQuestProgress('total_clicks', Math.floor(game.minigame.score / 10));
+                }, 1000);
+                
+                saveGame();
+            }
+            
             // ========== ОСНОВНАЯ ИГРА ==========
             const coinsEl = document.getElementById('coins');
             const heartsEl = document.getElementById('hearts');
@@ -3957,6 +5627,9 @@
             function initGame() {
                 loadGame();
                 initUpgrades();
+                initQuests();
+                initFashion();
+                initMinigame();
                 
                 calculateOfflineEarnings();
                 showOfflineEarningsNotification();
@@ -4022,7 +5695,7 @@
                     }
                 }, 1000);
                 
-                // Запускаем интервал для накопления алмазов от зверьков (исправлено)
+                // Запускаем интервал для накопления алмазов от зверьков
                 galleryDiamondsInterval = setInterval(accumulateGalleryDiamonds, 1000);
                 
                 // Обработчик клика по сердечку
@@ -4032,10 +5705,17 @@
                     handleHeartClick();
                 });
                 
+                // Обработчики для мини-игры
+                document.getElementById('closeMinigame').addEventListener('click', function() {
+                    if (game.minigame.isActive) {
+                        endMinigame();
+                    }
+                    document.getElementById('minigameOverlay').style.display = 'none';
+                });
+                
                 console.log('Игра инициализирована');
             }
             
-            // ИСПРАВЛЕНО: Функция для накопления алмазов от зверьков
             function accumulateGalleryDiamonds() {
                 if (!game.lastGalleryUpdate) {
                     game.lastGalleryUpdate = Date.now();
@@ -4043,16 +5723,14 @@
                 }
                 
                 const now = Date.now();
-                const timePassed = (now - game.lastGalleryUpdate) / 1000; // в секундах
+                const timePassed = (now - game.lastGalleryUpdate) / 1000;
                 
                 if (timePassed > 0) {
-                    // Каждый зверёк даёт +5 алмазов в минуту
-                    // Значит в секунду каждый зверёк даёт: 5 / 60 = 0.08333 алмазов
                     const diamondsPerSecondPerAnimal = 5 / 60;
                     const diamondsToAdd = game.unlockedAnimals * diamondsPerSecondPerAnimal * timePassed;
                     
                     game.galleryDiamonds += diamondsToAdd;
-                    game.galleryDiamondsPerMinute = game.unlockedAnimals * 5; // 5 алмазов в минуту за каждого
+                    game.galleryDiamondsPerMinute = game.unlockedAnimals * 5;
                     
                     game.lastGalleryUpdate = now;
                     
@@ -4090,6 +5768,10 @@
                 
                 game.hearts += clickPower;
                 game.totalHearts += clickPower;
+                
+                // Отслеживаем прогресс заданий
+                trackQuestProgress('collect_hearts', clickPower);
+                trackQuestProgress('earn_coins', Math.floor(clickPower / 10));
                 
                 if (game.vibration && navigator.vibrate) {
                     navigator.vibrate(30);
@@ -4129,6 +5811,9 @@
                     game.hearts += passiveHearts;
                     game.totalHearts += passiveHearts;
                     
+                    // Отслеживаем прогресс заданий
+                    trackQuestProgress('collect_hearts', passiveHearts);
+                    
                     if (game.hearts >= 10) {
                         const earnedCoins = Math.floor(game.hearts / 10);
                         if (earnedCoins > 0) {
@@ -4150,6 +5835,9 @@
                     if (passiveCoins > 0) {
                         game.coins += passiveCoins;
                         game.totalCoins += passiveCoins;
+                        
+                        // Отслеживаем прогресс заданий
+                        trackQuestProgress('earn_coins', passiveCoins);
                         
                         updateDisplay();
                         updateRebirthUI();
@@ -4191,7 +5879,6 @@
             
             function updateDiamondsDisplay() {
                 diamondsCounter.textContent = formatNumber(game.diamonds);
-                // ИСПРАВЛЕНО: Обновляем кнопку покупки морковки при изменении алмазов
                 const buyCarrotBtn = document.getElementById('buyCarrotBtn');
                 buyCarrotBtn.disabled = game.diamonds < 10;
             }
@@ -4281,6 +5968,9 @@
                 
                 game.coins -= upgrade.cost;
                 
+                // Отслеживаем прогресс заданий
+                trackQuestProgress('buy_upgrade', 1);
+                
                 if (upgrade.effect === "clickPower") {
                     game.clickPower += 1;
                     upgrade.count++;
@@ -4314,32 +6004,58 @@
             };
             
             window.exchangeDiamondsForCoins = function() {
-                if (game.diamonds < 10) return;
+                const diamondsInput = document.getElementById('diamondsInput');
+                const diamonds = parseInt(diamondsInput.value) || 0;
                 
-                game.diamonds -= 10;
-                game.coins += 200;
-                game.totalCoins += 200;
+                if (game.diamonds < diamonds) {
+                    showNotification(`❌ У вас только ${game.diamonds} алмазов!`);
+                    return;
+                }
+                
+                if (diamonds < 1) {
+                    showNotification(`❌ Минимальная сумма для обмена: 1 алмаз`);
+                    return;
+                }
+                
+                const coins = diamonds * 100;
+                
+                game.diamonds -= diamonds;
+                game.coins += coins;
+                game.totalCoins += coins;
                 
                 updateDisplay();
                 updateDiamondsDisplay();
-                renderExchange();
                 updateRebirthUI();
-                showNotification(`💰 Обменяно 10 алмазов на 200 монет!`);
+                showNotification(`💰 Обменяно ${diamonds} алмазов на ${coins} монет!`);
                 saveGame();
             };
             
             window.exchangeCoinsForDiamonds = function() {
-                if (game.coins < 1000) return;
+                const coinsInput = document.getElementById('coinsInput');
+                let coins = parseInt(coinsInput.value) || 0;
                 
-                game.coins -= 1000;
-                game.diamonds += 10;
-                game.totalDiamonds += 10;
+                if (game.coins < coins) {
+                    showNotification(`❌ У вас только ${formatNumber(game.coins)} монет!`);
+                    return;
+                }
+                
+                if (coins < 100) {
+                    showNotification(`❌ Минимальная сумма для обмена: 100 монет (1 алмаз)`);
+                    return;
+                }
+                
+                // Округляем до ближайших 100 монет
+                coins = Math.floor(coins / 100) * 100;
+                const diamonds = coins / 100;
+                
+                game.coins -= coins;
+                game.diamonds += diamonds;
+                game.totalDiamonds += diamonds;
                 
                 updateDisplay();
                 updateDiamondsDisplay();
-                renderExchange();
                 updateRebirthUI();
-                showNotification(`💎 Обменяно 1000 монет на 10 алмазов!`);
+                showNotification(`💎 Обменяно ${coins} монет на ${diamonds} алмазов!`);
                 saveGame();
             };
             
@@ -4350,10 +6066,11 @@
             };
             
             window.giveLoveToPet = function() {
-                const baseCost = 20000;
+                const baseCost = 10000; // ИЗМЕНЕНО с 20000 на 10000
                 let actualCost = baseCost;
                 
                 if (game.loveMultiplier === 0) {
+                    // MAX - используем весь баланс сердечек
                     actualCost = Math.floor(game.totalHearts / baseCost) * baseCost;
                     if (actualCost < baseCost) {
                         showNotification(`❌ Нужно минимум ${baseCost} сердечек для подарка!`);
@@ -4371,12 +6088,15 @@
                 game.totalHearts -= actualCost;
                 game.pet.loveGiven += actualCost;
                 
-                const subLevelsToAdd = Math.floor(actualCost / 20000);
+                const subLevelsToAdd = Math.floor(actualCost / 10000); // ИЗМЕНЕНО с 20000 на 10000
                 game.pet.subLevel += subLevelsToAdd;
                 
                 while (game.pet.subLevel >= game.pet.maxSubLevel) {
                     game.pet.subLevel -= game.pet.maxSubLevel;
                     game.pet.level++;
+                    
+                    // Отслеживаем прогресс заданий
+                    trackQuestProgress('pet_level', 1);
                     
                     showNotification(`🎉 ${game.pet.name} повысил${game.pet.gender === 'female' ? 'а' : ''} уровень! Теперь уровень ${game.pet.level}!`);
                     
@@ -4452,6 +6172,8 @@
                 const savedTimesLevel10 = game.timesLevel10;
                 const savedExclusiveX = [...game.exclusiveX];
                 const savedLoveMultiplier = game.loveMultiplier;
+                const savedQuests = { ...game.quests };
+                const savedPetFashion = { ...game.petFashion };
                 
                 game.coins = 0;
                 game.hearts = 0;
@@ -4487,6 +6209,8 @@
                 game.timesLevel10 = savedTimesLevel10;
                 game.exclusiveX = savedExclusiveX;
                 game.loveMultiplier = savedLoveMultiplier;
+                game.quests = savedQuests;
+                game.petFashion = savedPetFashion;
                 
                 updateDisplay();
                 updateRebirthUI();
@@ -4502,7 +6226,6 @@
                 saveGame();
             };
             
-            // ИСПРАВЛЕНО: Функция покупки морковки
             window.buyCarrot = function() {
                 if (game.diamonds < 10) {
                     showNotification(`❌ Нужно 10 алмазов для покупки морковки!`);
@@ -4552,6 +6275,9 @@
                 game.pet.pettedCount++;
                 game.pet.lastPetTime = now;
                 game.pet.canPetNotificationShown = false;
+                
+                // Отслеживаем прогресс заданий
+                trackQuestProgress('pet_pet', 1);
                 
                 updateDiamondsDisplay();
                 updatePetUI();
@@ -4680,6 +6406,9 @@
                 const oldUnlocked = game.unlockedAnimals;
                 game.unlockedAnimals++;
                 
+                // Отслеживаем прогресс заданий
+                trackQuestProgress('open_animal', 1);
+                
                 // Обновляем пассивные алмазы
                 game.galleryDiamondsPerMinute = game.unlockedAnimals * 5;
                 updateGalleryDiamondsDisplay();
@@ -4719,12 +6448,33 @@
                 }, hungerTime);
             }
             
+            // ========== НОВЫЕ ГЛОБАЛЬНЫЕ ФУНКЦИИ ==========
+            window.openQuestsWindow = function() {
+                document.getElementById('menuOverlay').style.display = 'none';
+                document.getElementById('questsOverlay').style.display = 'block';
+                document.getElementById('questsWindow').style.display = 'block';
+                renderQuests();
+            };
+            
+            window.openFashionWindow = function() {
+                document.getElementById('menuOverlay').style.display = 'none';
+                document.getElementById('fashionOverlay').style.display = 'block';
+                document.getElementById('fashionWindow').style.display = 'block';
+                renderFashion();
+            };
+            
+            window.openMinigameWindow = function() {
+                document.getElementById('menuOverlay').style.display = 'none';
+                document.getElementById('minigameOverlay').style.display = 'flex';
+                initMinigame();
+            };
+            
             // ========== СОХРАНЕНИЕ И ЗАГРУЗКА ==========
             function saveGame() {
                 try {
-                    game.version = '1.1.7';
+                    game.version = '1.2.0';
                     game.lastPlayTime = Date.now();
-                    localStorage.setItem('loveClicker_v1_1_7', JSON.stringify(game));
+                    localStorage.setItem('loveClicker_v1_2_0', JSON.stringify(game));
                 } catch (e) {
                     console.log('Ошибка сохранения:', e);
                 }
@@ -4732,9 +6482,9 @@
             
             function loadGame() {
                 try {
-                    // Пробуем загрузить из разных версий для совместимости
-                    let saved = localStorage.getItem('loveClicker_v1_1_7');
+                    let saved = localStorage.getItem('loveClicker_v1_2_0');
                     
+                    if (!saved) saved = localStorage.getItem('loveClicker_v1_1_7');
                     if (!saved) saved = localStorage.getItem('loveClicker_v1_1_6');
                     if (!saved) saved = localStorage.getItem('loveClicker_v1_1_5');
                     if (!saved) saved = localStorage.getItem('loveClicker_v1_1_4');
@@ -4751,7 +6501,45 @@
                             }
                         });
                         
-                        // Инициализация новых полей для версии 1.1.7
+                        // Инициализация новых полей для версии 1.2.0
+                        if (!game.quests) {
+                            game.quests = {
+                                daily: [],
+                                weekly: [],
+                                achievements: [],
+                                lastDailyReset: Date.now(),
+                                lastWeeklyReset: Date.now()
+                            };
+                        }
+                        
+                        if (!game.petFashion) {
+                            game.petFashion = {
+                                hats: [],
+                                clothes: [],
+                                accessories: [],
+                                backgrounds: [],
+                                equipped: {
+                                    hat: null,
+                                    clothes: null,
+                                    accessory: null,
+                                    background: null
+                                }
+                            };
+                        }
+                        
+                        if (!game.minigame) {
+                            game.minigame = {
+                                score: 0,
+                                timeLeft: 30,
+                                isActive: false,
+                                hearts: [],
+                                lastHeartSpawn: 0,
+                                timerInterval: null,
+                                spawnInterval: null,
+                                animationFrame: null
+                            };
+                        }
+                        
                         if (game.kisses === undefined) {
                             game.kisses = 0;
                             game.totalKissesEarned = 0;
@@ -4950,6 +6738,53 @@
                     updateRebirthUI();
                 }
             });
+            
+            // ========== ДОБАВЛЯЕМ ОБРАБОТЧИКИ ДЛЯ НОВЫХ КНОПОК ==========
+            document.getElementById('questsButton').addEventListener('click', function() {
+                document.getElementById('questsOverlay').style.display = 'block';
+                document.getElementById('questsWindow').style.display = 'block';
+                renderQuests();
+            });
+            
+            document.getElementById('questsButton').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                document.getElementById('questsOverlay').style.display = 'block';
+                document.getElementById('questsWindow').style.display = 'block';
+                renderQuests();
+            });
+            
+            document.getElementById('closeQuests').addEventListener('click', function() {
+                document.getElementById('questsOverlay').style.display = 'none';
+                document.getElementById('questsWindow').style.display = 'none';
+            });
+            
+            document.getElementById('questsOverlay').addEventListener('click', function() {
+                document.getElementById('questsOverlay').style.display = 'none';
+                document.getElementById('questsWindow').style.display = 'none';
+            });
+            
+            document.getElementById('minigameButton').addEventListener('click', function() {
+                document.getElementById('minigameOverlay').style.display = 'flex';
+                initMinigame();
+            });
+            
+            document.getElementById('minigameButton').addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                document.getElementById('minigameOverlay').style.display = 'flex';
+                initMinigame();
+            });
+            
+            document.getElementById('closeFashion').addEventListener('click', function() {
+                document.getElementById('fashionOverlay').style.display = 'none';
+                document.getElementById('fashionWindow').style.display = 'none';
+            });
+            
+            document.getElementById('fashionOverlay').addEventListener('click', function() {
+                document.getElementById('fashionOverlay').style.display = 'none';
+                document.getElementById('fashionWindow').style.display = 'none';
+            });
+            
+            document.getElementById('startMinigameBtn').addEventListener('click', startMinigame);
             
         });
     </script>
